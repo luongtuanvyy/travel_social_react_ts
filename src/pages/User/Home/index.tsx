@@ -4,48 +4,36 @@ import { Link } from 'react-router-dom';
 import { PlaceApi } from '~/api/PlaceApi';
 import { TourApi } from '~/api/TourApi';
 import { company, earth, tour } from '~/assets/images';
-import { Place, Search } from '~/assets/svg';
+import { Feed, Place as PlaceSVG, Search } from '~/assets/svg';
 import User from '~/assets/svg/User';
 import Navbar from '~/components/Navbar';
 import PlaceComponent from '~/components/Place';
 import SlideTour from '~/components/SlideTour';
 import Footer from '~/components/User/Footer';
-import { Tour } from '~/types/entity';
+import { Place, Tour } from '~/types/entity';
 
-const carouselData = [
-  {
-    id: 1,
-    img: 'https://wallpapercosmos.com/w/full/8/6/4/16953-3840x2160-desktop-4k-lake-background.jpg',
-  },
-  {
-    id: 5,
-    img: 'https://wallpapercosmos.com/w/full/8/6/4/16953-3840x2160-desktop-4k-lake-background.jpg',
-  },
-  {
-    id: 2,
-    img: 'https://wallpapercosmos.com/w/full/8/6/4/16953-3840x2160-desktop-4k-lake-background.jpg',
-  },
-  {
-    id: 3,
-    img: 'https://wallpapercosmos.com/w/full/8/6/4/16953-3840x2160-desktop-4k-lake-background.jpg',
-  },
-  {
-    id: 4,
-    img: 'https://wallpapercosmos.com/w/full/8/6/4/16953-3840x2160-desktop-4k-lake-background.jpg',
-  },
+const DATA_GRID_TEMPLATE = [
+  'row-span-2 col-span-2 ',
+  'row-span-2 col-span-2 ',
+  'row-span-4 col-span-2 ',
+  'row-span-2 col-span-3 ',
+  'row-span-2 ',
+  'row-span-2 col-span-2 ',
 ];
 
 const Home = () => {
-  const [active, setActive] = useState(1);
+  // const [active, setActive] = useState(1);
   const [tourHot, setTourHot] = useState<Tour[]>([]);
-  const slideScroll = useRef();
+  const [placeHot, setPlaceHot] = useState<Place[]>([]);
+  // const slideScroll = useRef();
 
   useEffect(() => {
     const fetchData = async () => {
       await TourApi.getTourHot().then((response) => {
         setTourHot(response.data.data.datas);
       });
-      await PlaceApi.getPlaces({ pageSize: 6 }).then((response) => {
+      await PlaceApi.getPlaces({ pageSize: 7, page: 0 }).then((response) => {
+        setPlaceHot(response.data.data.datas);
         console.log(response.data.data.datas);
       });
     };
@@ -109,7 +97,7 @@ const Home = () => {
               <div className="flex flex-col md:flex-row md:flex md:items-center md:space-x-2 space-y-4 md:space-y-0 bg-gray-50 p-3 rounded-lg shadow-md">
                 <div className="flex">
                   <div className="bg-gray-100 py-2 rounded-full">
-                    <Place />
+                    <PlaceSVG />
                   </div>
                   <div>
                     <label
@@ -153,7 +141,7 @@ const Home = () => {
 
                 <div className="flex">
                   <div className="bg-gray-100 py-2 rounded-full">
-                    <Place />
+                    <PlaceSVG />
                   </div>
                   <div>
                     <label
@@ -167,7 +155,7 @@ const Home = () => {
                 </div>
                 <div className="flex">
                   <div className="bg-gray-100 py-2 rounded-full">
-                    <Place />
+                    <PlaceSVG />
                   </div>
                   <div>
                     <label
@@ -254,64 +242,36 @@ const Home = () => {
           </div>
           <div className="grow">
             <div className="grid grid-rows-4 grid-flow-col gap-4 h-[540px]">
-              <div className="row-span-2 col-span-2 border-2 border-dashed">
-                <PlaceComponent />
-              </div>
-              <div className="row-span-2 col-span-2 border-2 border-dashed">
-                <PlaceComponent />
-              </div>
-              <div className="row-span-4 col-span-2 border-2 border-dashed">
-                <PlaceComponent />
-              </div>
-              <div className="row-span-2 col-span-3 border-2 border-dashed">
-                <PlaceComponent />
-              </div>
-              <div className="row-span-2 border-2 border-dashed">
-                <PlaceComponent />
-              </div>
-              <div className="row-span-2 col-span-2 border-2 border-dashed">
-                <PlaceComponent />
-              </div>
+              {DATA_GRID_TEMPLATE.map((item, index) => (
+                <div key={index} className={`${item} border-dashed`}>
+                  <PlaceComponent place={placeHot[index]} />
+                </div>
+              ))}
             </div>
           </div>
         </div>
         <div className="h-screen p-20">
           <div className="grid grid-cols-2 h-full">
-            <div className="flex items-center">
+            <div className="flex items-center justify-start">
               <section className="bg-white dark:bg-gray-900">
                 <div className="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
                   <div className="max-w-screen-md">
-                    <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
-                      Let's find more that brings us together.
+                    <h2 className="mb-4 text-4xl font-bold text-gray-900 dark:text-white">
+                      Những cái nhìn tổng quan về địa điểm mà bạn muốn đến
                     </h2>
-                    <p className="mb-8 font-light text-gray-500 sm:text-xl dark:text-gray-400">
-                      Flowbite helps you connect with friends, family and
-                      communities of people who share your interests. Connecting
-                      with your friends and family as well as discovering new
-                      ones is easy with features like Groups, Watch and
-                      Marketplace.
+                    <p className="mb-8 text-gray-500 sm:text-xl dark:text-gray-400">
+                      Chúng tôi cung cấp cho bạn những bài viết được người dùng
+                      mô tả về những địa điểm mà họ đã đến, giúp bạn biết được
+                      nhiều hơn thông qua những chia sẽ của họ.
                     </p>
-                    <div className="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4">
-                      <a
-                        href="#"
-                        className="inline-flex items-center justify-center px-4 py-2.5 text-base font-medium text-center text-white bg-primary-700 rounded-lg hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900"
-                      >
-                        Get started
-                      </a>
-                      <a
-                        href="#"
+                    <div className="flex flex-col w-fit ">
+                      <Link
+                        to={'/newfeed'}
                         className="inline-flex items-center justify-center px-4 py-2.5 text-base font-medium text-center text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
                       >
-                        <svg
-                          className="mr-2 -ml-1 w-5 h-5"
-                          fill="currentColor"
-                          viewBox="0 0 20 20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"></path>
-                        </svg>
-                        View more
-                      </a>
+                        <Feed />
+                        <span className="ml-2">Đi đến bảng tin</span>
+                      </Link>
                     </div>
                   </div>
                 </div>

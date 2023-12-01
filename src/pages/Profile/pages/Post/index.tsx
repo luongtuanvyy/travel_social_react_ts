@@ -1,13 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import { useAppSelector } from '~/app/hooks';
-import ListBlogReup from '~/features/Blog/components/ListBlog';
-import ListBlog from '~/features/Blog/components/ListBlog';
+import { useAppSelector } from '~/app/hook';
 
 const Posts = () => {
   const leftPage = useRef<HTMLDivElement>(null);
   const [sticky, setSticky] = useState(0);
-  const user = useAppSelector((state) => state.user);
+  const user = useAppSelector((state) => state.auth.user);
 
   useEffect(() => {
     if (leftPage.current?.offsetHeight)
@@ -30,14 +28,14 @@ const Posts = () => {
           </span>
           <div className="grid grid-cols-2 gap-2">
             <span className="text-sm text-gray-600">Ngày sinh</span>
-            <span className="text-sm font-medium">{user.value?.birthday}</span>
+            <span className="text-sm font-medium">{user?.birthday}</span>
             <span className="text-sm text-gray-600">Quê quán</span>
-            <span className="text-sm font-medium">{user.value?.address}</span>
+            <span className="text-sm font-medium">{user?.address}</span>
             <span className="text-sm text-gray-600">Số điện thoại</span>
-            <span className="text-sm font-medium">{user.value?.hotline}</span>
+            <span className="text-sm font-medium">{user?.hotline}</span>
             <span className="text-sm text-gray-600">Giới tính</span>
             <span className="text-sm font-medium">
-              {user.value?.gender ? 'Nam' : 'Nữ'}
+              {user?.gender ? 'Nam' : 'Nữ'}
             </span>
           </div>
         </div>

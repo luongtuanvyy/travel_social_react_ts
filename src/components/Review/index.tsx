@@ -1,8 +1,7 @@
-import { type } from 'os';
 import React from 'react';
+import { convertDate } from '~/service/DateService';
 import { TypeReview } from '../SlideReview';
 import StarArray from '../Star';
-import { convertDate } from '~/service/DateService';
 
 type ReviewProps = {
   review: TypeReview;

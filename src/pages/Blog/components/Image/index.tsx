@@ -1,4 +1,4 @@
-import { Modal, initModals } from 'flowbite';
+import { initModals } from 'flowbite';
 import { useEffect } from 'react';
 
 type ImageProps = {

@@ -1,8 +1,6 @@
-import { useAppSelector } from '~/app/hooks';
 import { Crash, Edit } from '~/assets/svg';
+import { convertDateToString } from '~/service/DateService';
 import { PropsTable } from '../..';
-import { convertDateToString } from '~/services/DateService';
-import { convertNumber } from '~/services/CurrentService';
 
 const DATA_TABLE_USER = [
   'Thông tin',
@@ -16,13 +14,13 @@ const DATA_TABLE_USER = [
 ];
 
 export type modalReturn = {
-  id: string;
+  id: number;
   name: string;
 };
 
 const Table = (props: PropsTable) => {
   const { onShowModal, onSelecteDelete, listUser, handleModalEdit } = props;
-  const user = useAppSelector((state) => state.user.value);
+  // const user = useAppSelector((state) => state.auth.user);
 
   const hanldeModal = (user: modalReturn) => {
     onShowModal(true, user);
@@ -63,7 +61,7 @@ const Table = (props: PropsTable) => {
                   <input
                     id="checkbox-table-search-1"
                     type="checkbox"
-                    onChange={() => onSelecteDelete(user.id)}
+                    onChange={() => onSelecteDelete(user?.id)}
                     className="w-4 h-4 text-gray-600 bg-gray-100 border-gray-300 rounded focus:ring-gray-500 dark:focus:ring-gray-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   />
                   <label htmlFor="checkbox-table-search-1" className="sr-only">
@@ -81,7 +79,7 @@ const Table = (props: PropsTable) => {
                   alt="Jese image"
                 />
                 <div className="ps-3">
-                  <div className="font-semibold text-sm">{user.firstName}</div>
+                  <div className="font-semibold text-sm">{user.name}</div>
                   <div className="font-normal text-gray-500 text-xs">
                     {user.email}
                   </div>
@@ -89,7 +87,7 @@ const Table = (props: PropsTable) => {
               </th>
               <td className="px-6 py-4">
                 <div className="font-medium text-gray-500">
-                  {convertDateToString(user.dateCreate)}
+                  {convertDateToString(user.createdAt)}
                 </div>
               </td>
               <td className="px-6 py-4">
@@ -108,12 +106,12 @@ const Table = (props: PropsTable) => {
               </td>
               <td className="px-6 py-4">
                 <div className=" text-gray-500 text-sm font-semibold">
-                  {convertNumber(user.countLike)}
+                  {/* {convertNumber(user.countLike)} */}
                 </div>
               </td>
               <td className="px-6 py-4">
                 <div className="font-semibold text-gray-500">
-                  {convertNumber(user.countPost)}
+                  {/* {convertNumber(user.countPost)} */}
                 </div>
               </td>
               <td className="px-6 py-4">
@@ -139,7 +137,7 @@ const Table = (props: PropsTable) => {
                     className="flex items-center justify-center w-fit h-8 text-xs font-medium bg-white border-2 border-white rounded-full hover:bg-gray-500 dark:border-gray-800"
                     href="#"
                   >
-                    +{convertNumber(user.countFollow)}
+                    {/* +{convertNumber(user.countFollow)} */}
                   </a>
                 </div>
               </td>
@@ -147,12 +145,12 @@ const Table = (props: PropsTable) => {
                 <button
                   type="button"
                   className={
-                    !user?.isActive
+                    !user?.isActivated
                       ? 'text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-3 py-1.5 text-center'
                       : 'text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-3 py-1.5 text-center'
                   }
                 >
-                  {!user?.isActive ? 'Đang hoạt động' : 'Đã khóa'}
+                  {!user?.isActivated ? 'Đang hoạt động' : 'Đã khóa'}
                 </button>
               </td>
               <td className="px-6 py-4 space-x-2">
@@ -163,9 +161,7 @@ const Table = (props: PropsTable) => {
                   <Edit />
                 </button>
                 <button
-                  onClick={() =>
-                    hanldeModal({ id: user.id, name: user.firstName })
-                  }
+                  onClick={() => hanldeModal({ id: user.id, name: user.name })}
                   className="bg-gray-100 p-1 rounded-full text-red-700 hover:bg-gray-200 hover:text-red-600"
                 >
                   <Crash />

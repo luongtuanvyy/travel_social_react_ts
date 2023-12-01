@@ -1,5 +1,4 @@
-
-const HeartBorder = (props: { fill?: string }) => {
+const HeartBorder = () => {
   return (
     <svg
       width="20"

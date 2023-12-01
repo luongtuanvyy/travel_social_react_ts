@@ -1,18 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import Table, { modalReturn } from './components/Table';
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { UserApi } from '~/api/UserApi';
+import { useAppSelector } from '~/app/hook';
+import { RootState } from '~/app/store';
+import { Close } from '~/assets/svg';
 import FilterAdmin from '~/components/Admin/Filter';
 import NavbarAdmin from '~/components/Admin/Navbar';
-import { ListUser, User } from '~/types/User';
-import { userApi } from '~/api/userApi';
-import Pagination from './components/Pagination';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { Close } from '~/assets/svg';
-import { useAppSelector } from '~/app/hooks';
-import { RootState } from '~/app/store';
+import { User } from '~/types/entity';
+import { modalReturn } from './components/Table';
 
 export type PropsTable = {
   onShowModal: (value: boolean, user?: modalReturn) => void;
-  onSelecteDelete: (id: string) => void;
+  onSelecteDelete: (id: number) => void;
   listUser: User[] | undefined;
   handleModalEdit: (value: boolean, user?: User) => void;
 };
@@ -20,12 +19,11 @@ export type PropsTable = {
 const ToursPage = () => {
   const [modalDelete, setModelDelete] = useState(false);
   const [modalEdit, setModelEdit] = useState(false);
-  const user = useAppSelector((state:RootState) => state.auth.user);
-  const [selectedDelete, setSelectedDelete] = useState<string[]>([]);
-  const [listUser, setListUser] = useState<ListUser>();
+  const user = useAppSelector((state: RootState) => state.auth.user);
+  const [selectedDelete, setSelectedDelete] = useState<number[]>([]);
   const [userDelete, setUserDelete] = useState<modalReturn>();
+  // const [stateResponse, setStateRespon] = useState<StateApiResponse<User[]>>();
   const navigate = useNavigate();
-
   const location = useLocation();
 
   const [page, setPage] = useState<number>((): number => {
@@ -45,25 +43,27 @@ const ToursPage = () => {
     setUserDelete(user);
   };
 
-  const handelModalEdit = (value: boolean, user?: User) => {
+  const handelModalEdit = (value: boolean) => {
     setModelEdit(value);
   };
 
-  const handleSelectDelete = (id: string) => {
-    if (selectedDelete.includes(id)) {
-      setSelectedDelete(selectedDelete.filter((item) => item !== id));
-    } else {
-      setSelectedDelete([...selectedDelete, id]);
-    }
-  };
+  // const handleSelectDelete = (id: number) => {
+  //   if (selectedDelete.includes(id)) {
+  //     setSelectedDelete(selectedDelete.filter((item) => item !== id));
+  //   } else {
+  //     setSelectedDelete([...selectedDelete, id]);
+  //   }
+  // };
 
-  const handlePage = (currentPage: number) => {
-    setPage(currentPage);
-  };
+  // const handlePage = (currentPage: number) => {
+  //   setPage(currentPage);
+  // };
 
   useEffect(() => {
     const fetchUser = async () => {
-      await userApi.getUserPage(page, 8).then((res) => setListUser(res));
+      await UserApi.getUser({ page, amount: 8 }).then((response) => {
+        console.log(response.data.data);
+      });
     };
     fetchUser();
     navigate({ pathname: location.pathname, search: `?page=${page}` });
@@ -73,7 +73,7 @@ const ToursPage = () => {
     <div className="flex flex-col h-screen bg-black relative">
       <NavbarAdmin />
       <FilterAdmin />
-      <div className="grow">
+      {/* <div className="grow">
         <Table
           onSelecteDelete={handleSelectDelete}
           listUser={listUser?.data}
@@ -86,7 +86,7 @@ const ToursPage = () => {
         total={listUser?.total}
         handlePage={handlePage}
         currentPage={page}
-      />
+      /> */}
       <div
         className={`fixed ${
           modalDelete ? 'flex' : 'hidden'
@@ -175,9 +175,7 @@ const ToursPage = () => {
                   alt=""
                 />
                 <div className="font-medium dark:text-white">
-                  <div>
-                    {user?.lastName} {user?.firstName}
-                  </div>
+                  <div>{user?.name}</div>
                   <div className="text-sm text-gray-500 dark:text-gray-400">
                     {user?.email}
                   </div>

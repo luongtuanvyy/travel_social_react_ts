@@ -1,14 +1,8 @@
-import React from 'react';
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
-import { useAppSelector } from '~/app/hooks';
-import ListBlog from '~/features/Blog/components/ListBlog';
-import { useRef, useEffect, useState } from 'react';
-import Posts from './Post';
-import Images from './Images';
-import ListBlogReup from '~/features/Blog/components/ListBlog';
+import { useAppSelector } from '~/app/hook';
 
 const Profile = () => {
-  const user = useAppSelector((state) => state.user);
+  const user = useAppSelector((state) => state.auth.user);
 
   const feature = [
     { name: 'Bảng tin', path: '/profile/post' },
@@ -29,11 +23,7 @@ const Profile = () => {
             alt=""
           />
           <div className="absolute bottom-0 translate-y-12 right-1/2 translate-x-1/2 h-40 w-40 flex items-center justify-center rounded-full bg-white ">
-            <img
-              className="h-36 rounded-full"
-              src={user.value?.avatar}
-              alt=""
-            />
+            <img className="h-36 rounded-full" src={user?.avatar} alt="" />
             <div className="absolute bottom-4 right-4 text-blue-500 bg-white rounded-full">
               <svg
                 width="28"
@@ -69,9 +59,9 @@ const Profile = () => {
           </div>
           <div className="flex flex-col items-center">
             <span className="font-bold text-2xl flex flex-col">
-              {user.value?.lastName} {user.value?.firstName}
+              {user?.name}
             </span>
-            <span>{user.value?.email}</span>
+            <span>{user?.email}</span>
           </div>
           <div className="flex justify-end items-center">
             <button className="text-white bg-secondary hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-8 py-3 text-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">

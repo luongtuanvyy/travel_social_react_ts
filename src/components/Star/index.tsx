@@ -1,4 +1,3 @@
-import React from 'react';
 import { StarNoneFill } from '~/assets/svg';
 import Star from '~/assets/svg/Star';
 

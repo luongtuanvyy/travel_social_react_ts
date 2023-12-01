@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { authReducer } from '~/slice/AuthSlice';
 import { BlogReducer } from '~/slice/BlogSlice';
 import { PlaceReducer } from '~/slice/PlaceSlide';
+import { TourReducer } from '~/slice/TourSlice';
 // ...
 
 export const store = configureStore({
@@ -9,6 +10,7 @@ export const store = configureStore({
     auth: authReducer,
     places: PlaceReducer,
     blog: BlogReducer,
+    tour: TourReducer,
   },
   devTools: true,
 });

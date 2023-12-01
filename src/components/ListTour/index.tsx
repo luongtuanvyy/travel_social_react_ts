@@ -1,4 +1,3 @@
-import React from 'react';
 import Tour, { TourType } from '../Tour';
 
 const DATA_TOUR: TourType[] = [

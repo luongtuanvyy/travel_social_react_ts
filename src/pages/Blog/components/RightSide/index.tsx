@@ -6,7 +6,7 @@ const RightSide = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await UserApi.getAllUser();
+        const response = await UserApi.getUser({ page: 1, amount: 2 });
         console.log(response);
         // setUserFollower(response);
       } catch (error) {

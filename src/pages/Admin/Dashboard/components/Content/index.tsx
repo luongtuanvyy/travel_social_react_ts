@@ -1,5 +1,3 @@
-import ApexCharts from 'apexcharts';
-import React from 'react';
 import DonutChart from '../Chart';
 
 const Content = () => {

@@ -58,7 +58,7 @@ const Filter = () => {
 
   return (
     <div className="mx-auto pt-[84px] w-full">
-      <div className="relative bg-white shadow-lg dark:bg-gray-800">
+      <div className="relative bg-white shadow-sm dark:bg-gray-800">
         <div className="flex flex-col items-center justify-between p-4 space-y-3 md:flex-row md:space-y-0 md:space-x-4">
           <div className="flex space-x-3">
             <form className="flex items-center w-full">
@@ -193,7 +193,8 @@ const Filter = () => {
                       <li key={index} className="w-fit">
                         <div className="flex items-center ps-3">
                           <input
-                            checked={item.value === 'all'}
+                            defaultValue={'all'}
+                            // checked={item.value === 'all'}
                             id={item.value}
                             type="radio"
                             value={item.value}
@@ -235,7 +236,8 @@ const Filter = () => {
                       <li key={index} className="w-fit">
                         <div className="flex items-center ps-3">
                           <input
-                            checked={item.value === 'all'}
+                            defaultValue={'all'}
+                            // checked={item.value === 'all'}
                             id={item.value}
                             type="radio"
                             value={item.value}

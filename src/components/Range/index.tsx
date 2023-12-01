@@ -1,9 +1,7 @@
-import React from 'react';
 import ReactSlider from 'react-slider';
-import Slider from 'react-slider';
+import { ArrowLeft, ArrowRight } from '~/assets/svg';
 import { CurrencyVND } from '~/service/CurrentService';
 import './index.css';
-import { ArrowLeft, ArrowRight } from '~/assets/svg';
 
 type RangeProps = {
   value: number[];

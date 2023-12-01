@@ -48,7 +48,10 @@ const Navbar = () => {
   }, []);
 
   const bgTransparent = () => {
-    if (location.pathname === '/home' && window.scrollY === 0) {
+    if (
+      (location.pathname === '/home' || location.pathname === '/') &&
+      window.scrollY === 0
+    ) {
       return false;
     }
     return true;

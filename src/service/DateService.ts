@@ -24,8 +24,16 @@ export const convertDate = (dated: string) => {
   }
 };
 
-export const convertDateToString = (date: Date): string => {
-  const newDate = new Date(date);
+export const convertDateToString = (dated: Date | string): string => {
+  let newDate;
+  let date;
+  if (typeof dated === 'string') {
+    const dateParts = dated.split('-');
+    date = new Date(`${dateParts[1]}/${dateParts[0]}/${dateParts[2]}`);
+  } else {
+    date = dated;
+  }
+  newDate = new Date(date);
   return `${newDate.getDate()} Tháng ${
     newDate.getMonth() + 1
   }, ${newDate.getFullYear()}`;

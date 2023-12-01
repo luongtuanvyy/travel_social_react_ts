@@ -1,7 +1,7 @@
-import { useAppSelector } from '~/app/hook';
 import { useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { Home, Feed, Action, History, UserIcon } from '~/assets/svg';
+import { useAppSelector } from '~/app/hook';
+import { Action, Feed, History, UserIcon } from '~/assets/svg';
 
 const Aside = () => {
   const user = useAppSelector((state) => state.auth.user);

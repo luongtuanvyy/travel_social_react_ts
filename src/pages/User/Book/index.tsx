@@ -1,36 +1,10 @@
-import React from 'react';
-import Navbar from '~/components/Navbar';
-import Indicator from './components/Indicators';
-import { TourDetail } from '../TourDetail';
-import { convertDate, convertDateToString } from '~/services/DateService';
-import { Bus, Calender, Edit, UserIcon } from '~/assets/svg';
-import StarArray from '~/components/Star';
-import DatePicker from 'tailwind-datepicker-react';
 import { Datepicker } from 'flowbite-react';
-
-const DATA_TOUR_DETAIL: TourDetail = {
-  id: 6,
-  createdAt: '16-11-2023',
-  createdBy: 'admin@gmail',
-  modifiedAt: '16-11-2023',
-  modifiedBy: 'admin@gmail',
-  isActivated: true,
-  name: 'Tour du lịch TP Hồ Chí Minh',
-  price: 9200000,
-  departure: '106 Nguyễn Du, Quận 1, Thành phố Hồ Chí Minh',
-  image:
-    'https://images.pexels.com/photos/19137171/pexels-photo-19137171/free-photo-of-canh-d-ng-lua-bali.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load',
-  size: 55,
-  registered: 1,
-  percent: 1,
-  vehicle: 'Ô tô',
-  cloudinaryId: '',
-  startDateBooking: '17-11-2023 00:00:00',
-  endDateBooking: '30-11-2023 00:00:00',
-  startDate: '01-12-2023',
-  startEnd: '03-12-2023',
-  tourTemplateId: 1,
-};
+import React from 'react';
+import { Bus, Edit, UserIcon } from '~/assets/svg';
+import Navbar from '~/components/Navbar';
+import StarArray from '~/components/Star';
+import { convertDateToString } from '~/service/DateService';
+import Indicator from './components/Indicators';
 
 const Booking = () => {
   const [modalMember, setModalMember] = React.useState(false);
@@ -53,7 +27,7 @@ const Booking = () => {
             <div className="grow flex flex-col">
               <div>
                 <p className="text-third font-medium ">Lựa chọn của bạn</p>
-                <p className="text-lg font-medium">{DATA_TOUR_DETAIL.name}</p>
+                {/* <p className="text-lg font-medium">{DATA_TOUR_DETAIL.name}</p> */}
               </div>
               <div className="grow flex items-center space-x-2">
                 <StarArray star={Math.round(4.3)} size={20} />
@@ -80,7 +54,7 @@ const Booking = () => {
                   </p>
                   <p className="text-sm font-medium flex space-x-2">
                     <span>
-                      {DATA_TOUR_DETAIL.size - DATA_TOUR_DETAIL.registered}
+                      {/* {DATA_TOUR_DETAIL.size - DATA_TOUR_DETAIL.registered} */}
                     </span>
                     <span className="text-gray-500">
                       <UserIcon size={20} />
@@ -462,17 +436,17 @@ const Booking = () => {
           <div className="bg-white p-4 rounded-lg border">
             <p className="text-lg font-medium mb-2">Thông tin hóa đơn</p>
             <div className="p-3 rounded-lg border">
-              <p className="font-medium">{DATA_TOUR_DETAIL.name}</p>
+              {/* <p className="font-medium">{DATA_TOUR_DETAIL.name}</p> */}
               <p className="font-medium text-sm">
                 Phương tiện:
                 <span className="ml-1 font-normal text-sm">
-                  {DATA_TOUR_DETAIL.vehicle}
+                  {/* {DATA_TOUR_DETAIL.vehicle} */}
                 </span>
               </p>
               <p className="font-medium text-sm">
                 Xuất phát:
                 <span className="ml-1 font-normal text-sm">
-                  {DATA_TOUR_DETAIL.departure}
+                  {/* {DATA_TOUR_DETAIL.departure} */}
                 </span>
               </p>
               <hr className="my-4" />
@@ -480,14 +454,14 @@ const Booking = () => {
                 <div>
                   <span className="text-gray-500 text-sm">Bắt đầu</span>
                   <p className="font-medium text-sm">
-                    {convertDateToString(DATA_TOUR_DETAIL.startDate)}
+                    {/* {convertDateToString(DATA_TOUR_DETAIL.startDate)} */}
                   </p>
                   <p className=" text-sm">lúc 5:40</p>
                 </div>
                 <div>
                   <span className="text-gray-500 text-sm">Kết thúc</span>
                   <p className="font-medium text-sm">
-                    {convertDateToString(DATA_TOUR_DETAIL.startDate)}
+                    {/* {convertDateToString(DATA_TOUR_DETAIL.startDate)} */}
                   </p>
                   <p className=" text-sm">lúc 6:20</p>
                 </div>

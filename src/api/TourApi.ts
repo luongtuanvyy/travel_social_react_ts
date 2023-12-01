@@ -5,7 +5,7 @@ import { Tour } from '~/types/entity';
 
 export const TourApi = {
   getTourHot: async (): Promise<
-    AxiosResponse<ApiRespone<StateApiResponse<Tour>>>
+    AxiosResponse<ApiRespone<StateApiResponse<Tour[]>>>
   > => {
     try {
       const response = await axiosClientTravel.get('/api/public/tours');

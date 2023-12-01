@@ -1,4 +1,3 @@
-import React from 'react';
 import { ArrowDown, ArrowUp } from '~/assets/svg';
 
 const ButtonSort = () => {

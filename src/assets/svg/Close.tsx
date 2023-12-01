@@ -1,4 +1,3 @@
-
 const Close = () => {
   return (
     <svg
@@ -12,13 +11,13 @@ const Close = () => {
         d="M18 6L6 18"
         stroke="#222222"
         strokeLinecap="round"
-        stroke-linejoin="round"
+        strokeLinejoin="round"
       />
       <path
         d="M6 6L18 18"
         stroke="#222222"
         strokeLinecap="round"
-        stroke-linejoin="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

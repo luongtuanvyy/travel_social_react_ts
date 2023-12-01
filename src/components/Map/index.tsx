@@ -2,17 +2,16 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useState } from 'react';
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
-import { CurrencyVND } from '~/service/CurrentService';
+import { Tour } from '~/types/entity';
 import './index.css';
 import osm from './osm-provider';
-import { Tour } from '~/types/entity';
 
 type MapLeafletProps = {
   tour: Tour;
 };
 
 const MapLeaflet = (prop: MapLeafletProps) => {
-  const [center, setCenter] = useState({ lat: 10.619471, lng: 105.986586 });
+  const center = { lat: 10.619471, lng: 105.986586 };
   const ZOOM_LEVEL = 9;
   const { tour } = prop;
 

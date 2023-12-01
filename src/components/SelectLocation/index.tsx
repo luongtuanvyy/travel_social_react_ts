@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { VietNamLocationApi } from '~/api/VietNamLocationApi';
 import { Place } from '~/assets/svg';
 import { VietNamLocation } from '~/types/api';

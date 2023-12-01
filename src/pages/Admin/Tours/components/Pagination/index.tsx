@@ -1,4 +1,3 @@
-import { useLocation, useNavigate } from 'react-router-dom';
 
 type PropsPagination = {
   pageCount: number | undefined;

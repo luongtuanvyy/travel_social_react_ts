@@ -1,4 +1,4 @@
-import { useAppSelector } from '~/app/hooks';
+import { useAppSelector } from '~/app/hook';
 import {
   Bill,
   Company,
@@ -11,7 +11,7 @@ import {
 import Report from '~/assets/svg/Report';
 import Tour from '~/assets/svg/Tour';
 import User from '~/assets/svg/User';
-import ListNotification from '~/features/Blog/components/ListNotification';
+// import ListNotification from '~/features/Blog/components/ListNotification';
 
 const DATA_GLOBAL_FEATURE_NAVBAR_ADMIN = [
   { feature: 'Trang chủ', icon: <Menu />, link: '/home' },
@@ -26,7 +26,7 @@ const DATA_GLOBAL_FEATURE_NAVBAR_ADMIN = [
 ];
 
 const Navbar = () => {
-  const user = useAppSelector((state) => state.user);
+  const user = useAppSelector((state) => state.auth.user);
 
   return (
     <nav className="bg-black border-b border-gray-700 sticky h-fit left-0 right-0 top-0 z-50">
@@ -105,7 +105,7 @@ const Navbar = () => {
             <div className="block py-2 px-4 text-base font-medium text-center text-gray-700 bg-gray-50 dark:bg-gray-600 dark:text-gray-300">
               Notifications
             </div>
-            <ListNotification />
+            {/* <ListNotification /> */}
           </div>
 
           <button
@@ -123,7 +123,7 @@ const Navbar = () => {
             <div className="block py-2 px-4 text-base font-medium text-center text-gray-700 bg-gray-50 dark:bg-gray-600 dark:text-gray-300">
               Thông báo
             </div>
-            <ListNotification />
+            {/* <ListNotification /> */}
           </div>
 
           <button
@@ -135,7 +135,7 @@ const Navbar = () => {
           >
             <img
               className="w-8 h-8 rounded-full"
-              src={user.value?.avatar}
+              src={user?.avatar}
               alt="user photo"
             />
           </button>
@@ -145,10 +145,10 @@ const Navbar = () => {
           >
             <div className="py-3 px-4">
               <span className="block text-sm font-semibold text-gray-900 dark:text-white">
-                {user.value?.lastName} {user.value?.firstName}
+                {user?.name}
               </span>
               <span className="block text-sm text-gray-900 truncate dark:text-white">
-                {user.value?.email}
+                {user?.email}
               </span>
             </div>
             <ul

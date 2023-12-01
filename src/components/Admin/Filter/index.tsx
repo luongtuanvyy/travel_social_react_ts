@@ -3,7 +3,6 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { Close } from '~/assets/svg';
-import { User } from '~/types/User';
 
 const schema = yup
   .object({

@@ -6,7 +6,6 @@ import { StateApiResponse } from '~/types/api';
 import { Tour } from '~/types/entity';
 import Filter from './components/Filter';
 import ListTour from './components/ListTour';
-import { tour } from '~/assets/images';
 
 const Tours = () => {
   const [state, setState] = React.useState<StateApiResponse<Tour[]>>();
@@ -15,7 +14,6 @@ const Tours = () => {
     const fetchTours = async () => {
       await TourApi.getAllTour().then((response) => {
         setState(response.data.data);
-        console.log(response.data.data);
         
       });
     };
@@ -23,7 +21,7 @@ const Tours = () => {
   }, []);
 
   const handlePage = () => {
-    console.log('handlePage');
+    // console.log('handlePage');
   };
 
   return (
