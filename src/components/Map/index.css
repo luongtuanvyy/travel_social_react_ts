@@ -1,0 +1,48 @@
+.leaflet-container {
+  width: 100%;
+  height: 600px;
+  @apply z-20 rounded-lg;
+}
+
+.chip {
+  display: inline-block;
+  padding: 0 25px;
+  height: 50px;
+  font-size: 16px;
+  line-height: 50px;
+  border-radius: 25px;
+  background-color: #f1f1f1;
+}
+
+.chip img {
+  float: left;
+  margin: 0 10px 0 -25px;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+}
+
+.static-map {
+  width: 250px;
+  height: 250px;
+}
+
+.leaflet-control-zoom-in {
+  @apply border-0 rounded-full mb-2 !important
+}
+
+.leaflet-control-zoom-out {
+  @apply border-0 rounded-full !important
+}
+
+.icon-marker {
+  @apply w-8 h-8 rounded-full shadow-lg !important;
+}
+
+.leaflet-control-attribution.leaflet-control {
+  @apply hidden !important;
+}
+
+.leaflet-control-zoom {
+  @apply border-0 rounded-xl !important;
+}

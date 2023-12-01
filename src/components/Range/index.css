@@ -1,0 +1,3 @@
+.example-track.example-track-1 {
+  @apply bg-blue-900 h-1 rounded-full;
+}

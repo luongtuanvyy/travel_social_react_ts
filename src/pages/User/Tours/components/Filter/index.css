@@ -1,0 +1,7 @@
+.datepicker>div>div>input {
+  @apply w-fit pr-0 !important;
+}
+
+.datepicker>div>div {
+  @apply w-fit !important;
+}
