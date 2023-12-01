@@ -5,10 +5,9 @@ import BlogFeature from './pages/Blog';
 import Login from './pages/Login';
 import Home from './pages/User/Home';
 import PlacePage from './pages/User/Page';
+import TourDetail from './pages/User/TourDetail';
 import Tours from './pages/User/Tours';
 import { authAction } from './slice/AuthSlice';
-import { initFlowbite } from 'flowbite';
-import TourDetail from './pages/User/TourDetail';
 
 const App = () => {
   const dispatch = useDispatch();

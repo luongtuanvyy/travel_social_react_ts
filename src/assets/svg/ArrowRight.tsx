@@ -1,4 +1,4 @@
-import React from 'react';
+
 
 const ArrowRight = (props: { size?: number }) => {
   const { size } = props;
