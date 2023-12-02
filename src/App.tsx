@@ -22,8 +22,11 @@ import LayoutAdmin from './pages/Admin/layout';
 import TourAdmin from './pages/Admin/Tour';
 import DashboardAdmin from './pages/Admin/Dashboard';
 import About from './pages/About';
+import LayoutCompany from './pages/Company/layout';
+import { initFlowbite } from 'flowbite';
 
 const App = () => {
+  initFlowbite();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -56,6 +59,7 @@ const App = () => {
         <Route path="/newfeed" element={<BlogFeature />} />
         <Route path="/booking" element={<Booking />} />
         <Route path="/about" element={<About />} />
+        <Route path="/company" element={<LayoutCompany />}></Route>
         <Route path="/tour-detail" element={<TourDetail />}></Route>
         <Route path="/admin" element={<LayoutAdmin />}>
           <Route path="users" element={<UserAdmin />}></Route>

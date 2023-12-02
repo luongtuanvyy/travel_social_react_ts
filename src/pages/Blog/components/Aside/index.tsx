@@ -9,9 +9,8 @@ const Aside = () => {
   const path = location.pathname;
   const feature = [
     { svg: <Feed />, path: '/newfeed' },
-    { svg: <UserIcon />, path: '/profile' },
-    { svg: <Action />, path: '/action' },
-    { svg: <History />, path: '/history' },
+    { svg: <UserIcon />, path: '/profile/post' },
+    { svg: <History />, path: '/profile/history' },
   ];
 
   useEffect(() => {}, [user]);

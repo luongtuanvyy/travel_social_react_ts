@@ -9,6 +9,5 @@ export const InitFlowbiteProvider = ({
   children,
 }: InitFlowbiteProviderProps) => {
   initFlowbite();
-
   return <>{children}</>;
 };
