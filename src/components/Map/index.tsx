@@ -7,7 +7,7 @@ import './index.css';
 import osm from './osm-provider';
 
 type MapLeafletProps = {
-  tour: Tour;
+  tour?: Tour;
 };
 
 const MapLeaflet = (prop: MapLeafletProps) => {
@@ -30,38 +30,40 @@ const MapLeaflet = (prop: MapLeafletProps) => {
           />
 
           <Marker position={[10.619471, 105.986586]} icon={markerIcon}>
-            <Popup className="">
-              <div className="flex space-x-2">
-                <img
-                  className="rounded-lg h-20 w-20 min-w-[80px] object-cover mb-1"
-                  src={tour.image}
-                />
-                <div className="flex flex-col justify-center">
-                  <a
-                    className="text-black"
-                    style={{ color: 'black', fontWeight: 'bold' }}
-                    href=""
-                  >
-                    {tour.name}
-                  </a>
-                  <p
-                    className="flex items-center text-xs "
-                    style={{ margin: '1px', color: 'gray' }}
-                  >
-                    {tour.tourTemplateId.name}
-                  </p>
-                  <p
-                    className="flex space-x-1 items-center"
-                    style={{ margin: '1px', color: 'gray' }}
-                  >
-                    {tour.size - tour.registered} người &#8226; 4.5 &#8226;{' '}
-                    <span className="ml-1 text-red-700 font-bold">
-                      {/* {CurrencyVND(tour.price)} VND */}
-                    </span>
-                  </p>
+            {tour && (
+              <Popup className="">
+                <div className="flex space-x-2">
+                  <img
+                    className="rounded-lg h-20 w-20 min-w-[80px] object-cover mb-1"
+                    src={tour.image}
+                  />
+                  <div className="flex flex-col justify-center">
+                    <a
+                      className="text-black"
+                      style={{ color: 'black', fontWeight: 'bold' }}
+                      href=""
+                    >
+                      {tour.name}
+                    </a>
+                    <p
+                      className="flex items-center text-xs "
+                      style={{ margin: '1px', color: 'gray' }}
+                    >
+                      {tour.tourTemplateId.name}
+                    </p>
+                    <p
+                      className="flex space-x-1 items-center"
+                      style={{ margin: '1px', color: 'gray' }}
+                    >
+                      {tour.size - tour.registered} người &#8226; 4.5 &#8226;{' '}
+                      <span className="ml-1 text-red-700 font-bold">
+                        {/* {CurrencyVND(tour.price)} VND */}
+                      </span>
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </Popup>
+              </Popup>
+            )}
           </Marker>
         </MapContainer>
       </div>
