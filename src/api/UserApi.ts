@@ -1,17 +1,16 @@
 import { AxiosResponse } from 'axios';
-import { User } from 'firebase/auth';
 import queryString from 'query-string';
-import { ApiRespone } from '~/types/api';
+import { ApiRespone, StateApiResponse } from '~/types/api';
 import { axiosClientTravel } from './ApiClient';
+import { User } from '~/types/entity';
 
 export const UserApi = {
   getUser: async (params: {
     page: number;
-    amount: number;
-  }): Promise<AxiosResponse<ApiRespone<User[]>>> => {
-    const urlParams = `api/admin/accounts? ${queryString.stringify(params)}`;
-    const result = await axiosClientTravel(urlParams);
-    return result;
+    pageSize: number;
+  }): Promise<AxiosResponse<ApiRespone<StateApiResponse<User[]>>>> => {
+    const urlParams = `api/admin/accounts?${queryString.stringify(params)}`;
+    return await axiosClientTravel(urlParams);
   },
   //   getUserById: async (id: string) => {},
   //   createUser: async (data: any) => {},

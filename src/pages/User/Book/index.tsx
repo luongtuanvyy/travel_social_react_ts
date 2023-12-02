@@ -5,10 +5,12 @@ import Navbar from '~/components/Navbar';
 import StarArray from '~/components/Star';
 import { convertDateToString } from '~/service/DateService';
 import Indicator from './components/Indicators';
+import { useLocation } from 'react-router-dom';
 
 const Booking = () => {
   const [modalMember, setModalMember] = React.useState(false);
   const [detail, setDetail] = React.useState(false);
+  const location = useLocation();
 
   return (
     <>

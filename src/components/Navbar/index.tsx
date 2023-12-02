@@ -12,7 +12,7 @@ const DATA_FEATURE_NAVBAR = [
   { id: 2, name: 'Địa điểm', path: '/place' },
   { id: 3, name: 'Tour', path: '/tour' },
   { id: 4, name: 'Đặt vé', path: '/company' },
-  { id: 5, name: 'Bảng tin', path: '/feed' },
+  { id: 5, name: 'Bảng tin', path: '/newfeed' },
   { id: 6, name: 'Liên hệ', path: '/contact' },
 ];
 

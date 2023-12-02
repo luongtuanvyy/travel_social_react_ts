@@ -5,6 +5,39 @@ import { convertDate } from '~/service/DateService';
 import { Comment as TypeComment } from '~/types/entity';
 import ListComment from '../ListComment';
 
+export const DATA_COMMENT: TypeComment[] = [
+  {
+    id: 1,
+    avatar:
+      'https://i.pinimg.com/236x/eb/e6/63/ebe6631e86211b958755d41033b196ee.jpg',
+    name: 'Nguyễn Văn A',
+    content: 'Bài viết rất hay',
+    totalLike: 10,
+    totalReply: 2,
+    createdAt: '2021-10-09T07:05:59.000Z',
+    reply: [
+      {
+        id: 2,
+        avatar:
+          'https://i.pinimg.com/236x/eb/e6/63/ebe6631e86211b958755d41033b196ee.jpg',
+        name: 'Nguyễn Văn B',
+        content: 'Bài viết rất hay',
+        totalLike: 10,
+        totalReply: 2,
+        createdAt: '2021-10-09T07:05:59.000Z',
+        createdBy: '',
+        isActivated: true,
+        modifiedAt: '11-12-2023',
+        modifiedBy: '',
+      },
+    ],
+    createdBy: '',
+    isActivated: true,
+    modifiedAt: '11-12-2023',
+    modifiedBy: '',
+  },
+];
+
 const ModalImage = () => {
   const blog = useAppSelector((state) => state.blog);
   const user = useAppSelector((state) => state.auth.user);
@@ -94,7 +127,7 @@ const ModalImage = () => {
                     {blog.value?.name}
                   </h5>
                   <p className="text-xs font-normal text-gray-700 dark:text-gray-400">
-                    {convertDate(blog.value?.createdAt)}
+                    {convertDate(blog.value?.createdAt || '')}
                   </p>
                 </div>
                 <div className="grow p-5 flex justify-end items-center">
@@ -293,7 +326,7 @@ const ModalImage = () => {
                 </select>
               </div>
               <div className="overflow-y-auto">
-                {/* <ListComment comments={comments} /> */}
+                <ListComment comments={DATA_COMMENT} />
               </div>
             </div>
           </div>

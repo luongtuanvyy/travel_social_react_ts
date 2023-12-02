@@ -5,7 +5,6 @@ import Content from './components/Content';
 const DashboardAdmin = () => {
   return (
     <div className="flex flex-col h-screen">
-      <Navbar />
       <SidebarAdmin />
       <Content/>
       <div className="bg-black grow h-full">SCO</div>

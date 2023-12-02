@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { BlogApi } from '~/api/BlogApi';
-import { Blog as blogType } from '~/types/entity';
+import { Blog as BlogInterface } from '~/types/entity';
 import Blog from '../Blog';
 import ModalImage from '../Modal';
 
 const ListBlogReup = () => {
-  const [listBlog, setListBlog] = useState<blogType[]>([]);
+  const [listBlog, setListBlog] = useState<BlogInterface[]>([]);
   const [page, setPage] = useState(1);
   const [scrollY, setScrollY] = useState(0);
 
@@ -56,7 +56,7 @@ const ListBlogReup = () => {
 
   return (
     <div className="bg-gray-400 rounded-3xl">
-      {listBlog.map((blog: blogType, index: number) => (
+      {listBlog.map((blog: BlogInterface, index: number) => (
         <Blog blog={blog} key={index} />
       ))}
       <div
@@ -65,7 +65,7 @@ const ListBlogReup = () => {
         aria-hidden="true"
         className="fixed top-0 left-0 right-0 z-50 hidden w-screen overflow-x-hidden overflow-y-auto md:inset-0 h-screen"
       >
-        {/* <ModalImage /> */}
+        <ModalImage />
       </div>
     </div>
   );

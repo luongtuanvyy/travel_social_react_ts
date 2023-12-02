@@ -1,6 +1,6 @@
 type PropsPagination = {
   pageCount: number | undefined;
-  total: number | undefined;
+  total?: number | undefined;
   handlePage: (currentPage: number) => void;
   currentPage: number;
 };

@@ -1,16 +1,15 @@
 import { initTabs } from 'flowbite';
-import React, { useEffect, useLayoutEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import React, { useLayoutEffect, useState } from 'react';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import { TourApi } from '~/api/TourApi';
-import { Place, StarNoneFill, Tick } from '~/assets/svg';
+import { StarNoneFill, Tick } from '~/assets/svg';
 import Star from '~/assets/svg/Star';
 import MapLeaflet from '~/components/Map';
 import Navbar from '~/components/Navbar';
 import SlideImage from '~/components/SlideImage';
 import SlideReview from '~/components/SlideReview';
-import { CurrencyVND } from '~/service/CurrentService';
 import { Tour } from '~/types/entity';
-import SlideTour from '~/components/SlideTour';
+import { Link } from 'react-router-dom';
 
 type Rate = {
   star: number;
@@ -41,7 +40,6 @@ const DATA_RATE: Rate[] = [
 ];
 
 const TourDetail = () => {
-  initTabs();
   const [searchParams] = useSearchParams();
   const [tour, setTour] = useState<Tour>();
   const [rating, setRating] = useState(0);
@@ -129,7 +127,7 @@ const TourDetail = () => {
                     </div>
                     <div>
                       <button className="px-5 py-2 border border-gray-700 rounded-lg">
-                        Đặt ngay
+                        <Link to={`/booking?id=${tour.id}`}>Đặt ngay</Link>
                       </button>
                     </div>
                   </div>
@@ -309,7 +307,6 @@ const TourDetail = () => {
                 <p className="text-xs text-gray-500">
                   Tour dưới đây có cùng điểm đến với lựa chọn của bạn
                 </p>
-               
               </div>
               <div className="mt-4">
                 <p className="text-lg font-medium">Tour tương tự</p>
@@ -317,7 +314,6 @@ const TourDetail = () => {
                   Tour dưới đây có cùng địa điểm bắt đầu và kết thúc với lựa
                   chọn của bạn
                 </p>
-                
               </div>
             </div>
           </div>

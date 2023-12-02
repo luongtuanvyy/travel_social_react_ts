@@ -16,7 +16,7 @@ const Posts = () => {
     <div className="grid grid-cols-3 gap-4">
       <div
         ref={leftPage}
-        className={`h-fit sticky ${sticky ? '-top-[220px]' : ''} `}
+        className={`h-fit sticky ${sticky ? '-top-[228px]' : ''} `}
       >
         <div className="flex flex-col space-y-3 bg-white rounded-3xl p-6 mb-4">
           <span className="font-medium">Thông tin cá nhân</span>

@@ -16,6 +16,12 @@ import Follower from './pages/Profile/pages/Followers';
 import Images from './pages/Profile/pages/Images';
 import Booking from './pages/User/Book';
 import RegisterFeature from './pages/Register';
+import History from './pages/Profile/pages/History';
+import UserAdmin from './pages/Admin/Users';
+import LayoutAdmin from './pages/Admin/layout';
+import TourAdmin from './pages/Admin/Tour';
+import DashboardAdmin from './pages/Admin/Dashboard';
+import About from './pages/About';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -44,11 +50,18 @@ const App = () => {
             <Route path="images" element={<Images />} />
             <Route path="follower" element={<Follower />} />
           </Route>
+          <Route path="history" element={<History />} />
         </Route>
         <Route path="/register" element={<RegisterFeature />} />
         <Route path="/newfeed" element={<BlogFeature />} />
         <Route path="/booking" element={<Booking />} />
+        <Route path="/about" element={<About />} />
         <Route path="/tour-detail" element={<TourDetail />}></Route>
+        <Route path="/admin" element={<LayoutAdmin />}>
+          <Route path="users" element={<UserAdmin />}></Route>
+          <Route path="tours" element={<TourAdmin />}></Route>
+          <Route path="dashboard" element={<DashboardAdmin />}></Route>
+        </Route>
       </Routes>
     </>
   );

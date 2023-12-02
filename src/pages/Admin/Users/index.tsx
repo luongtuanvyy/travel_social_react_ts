@@ -7,7 +7,9 @@ import { Close } from '~/assets/svg';
 import FilterAdmin from '~/components/Admin/Filter';
 import NavbarAdmin from '~/components/Admin/Navbar';
 import { User } from '~/types/entity';
-import { modalReturn } from './components/Table';
+import Table, { modalReturn } from './components/Table';
+import { StateApiResponse } from '~/types/api';
+import Pagination from '~/components/Pagination';
 
 export type PropsTable = {
   onShowModal: (value: boolean, user?: modalReturn) => void;
@@ -16,13 +18,14 @@ export type PropsTable = {
   handleModalEdit: (value: boolean, user?: User) => void;
 };
 
-const ToursPage = () => {
+const UserAdmin = () => {
   const [modalDelete, setModelDelete] = useState(false);
   const [modalEdit, setModelEdit] = useState(false);
   const user = useAppSelector((state: RootState) => state.auth.user);
   const [selectedDelete, setSelectedDelete] = useState<number[]>([]);
   const [userDelete, setUserDelete] = useState<modalReturn>();
-  // const [stateResponse, setStateRespon] = useState<StateApiResponse<User[]>>();
+  const [stateResponse, setStateResponse] =
+    useState<StateApiResponse<User[]>>();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -47,22 +50,22 @@ const ToursPage = () => {
     setModelEdit(value);
   };
 
-  // const handleSelectDelete = (id: number) => {
-  //   if (selectedDelete.includes(id)) {
-  //     setSelectedDelete(selectedDelete.filter((item) => item !== id));
-  //   } else {
-  //     setSelectedDelete([...selectedDelete, id]);
-  //   }
-  // };
+  const handleSelectDelete = (id: number) => {
+    if (selectedDelete.includes(id)) {
+      setSelectedDelete(selectedDelete.filter((item) => item !== id));
+    } else {
+      setSelectedDelete([...selectedDelete, id]);
+    }
+  };
 
-  // const handlePage = (currentPage: number) => {
-  //   setPage(currentPage);
-  // };
+  const handlePage = (currentPage: number) => {
+    setPage(currentPage);
+  };
 
   useEffect(() => {
     const fetchUser = async () => {
-      await UserApi.getUser({ page, amount: 8 }).then((response) => {
-        console.log(response.data.data);
+      await UserApi.getUser({ page, pageSize: 8 }).then((response) => {
+        setStateResponse(response.data.data);
       });
     };
     fetchUser();
@@ -70,23 +73,21 @@ const ToursPage = () => {
   }, [location.search, page]);
 
   return (
-    <div className="flex flex-col h-screen bg-black relative">
-      <NavbarAdmin />
+    <div className="flex flex-col bg-black relative">
       <FilterAdmin />
-      {/* <div className="grow">
+      <div className="grow">
         <Table
           onSelecteDelete={handleSelectDelete}
-          listUser={listUser?.data}
+          listUser={stateResponse?.datas}
           onShowModal={onShowModal}
           handleModalEdit={handelModalEdit}
         />
       </div>
       <Pagination
-        pageCount={listUser?.pageCount}
-        total={listUser?.total}
+        pageCount={stateResponse?.totalPage}
         handlePage={handlePage}
         currentPage={page}
-      /> */}
+      />
       <div
         className={`fixed ${
           modalDelete ? 'flex' : 'hidden'
@@ -299,4 +300,4 @@ const ToursPage = () => {
   );
 };
 
-export default ToursPage;
+export default UserAdmin;

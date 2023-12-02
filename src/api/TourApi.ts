@@ -2,6 +2,7 @@ import { AxiosResponse } from 'axios';
 import { ApiRespone, StateApiResponse } from '~/types/api';
 import { axiosClientTravel } from './ApiClient';
 import { Tour } from '~/types/entity';
+import queryString from 'query-string';
 
 export const TourApi = {
   getTourHot: async (): Promise<
@@ -26,5 +27,13 @@ export const TourApi = {
     const urlparams = `/api/public/tours?id=${id}`;
     const response = await axiosClientTravel.get(urlparams);
     return response;
+  },
+  getTourWithFilter: async (params: {
+    page: number;
+    pageSize: number;
+  }): Promise<AxiosResponse<ApiRespone<StateApiResponse<Tour[]>>>> => {
+    const urlparams = `/api/public/tours?${queryString.stringify(params)}`;
+    const result = await axiosClientTravel.get(urlparams);
+    return result;
   },
 };

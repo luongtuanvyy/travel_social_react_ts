@@ -24,6 +24,21 @@ export const convertDate = (dated: string) => {
   }
 };
 
+export const calculateDaysAndNights = (date1: string, date2: string) => {
+  const dateParts1 = date1.split('-');
+  const dateParts2 = date1.split('-');
+  const stamp1 = new Date(`${dateParts1[1]}/${dateParts1[0]}/${dateParts1[2]}`);
+  const stamp2 = new Date(`${dateParts2[1]}/${dateParts2[0]}/${dateParts2[2]}`);
+  const oneDay = 1000 * 60 * 60 * 24;
+  const diff = stamp2.getTime() - stamp1.getTime();
+
+  const days = Math.floor(diff / oneDay);
+
+  const nights = days - 1;
+
+  return nights > 0 ? `${days} ngày ${nights} đêm` : `${days} ngày`;
+};
+
 export const convertDateToString = (dated: Date | string): string => {
   let newDate;
   let date;

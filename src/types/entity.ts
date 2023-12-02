@@ -2,7 +2,7 @@ export interface BaseEntity {
   id: number;
   createdAt: string;
   createdBy: string;
-  modifiedAt: Date;
+  modifiedAt: string;
   modifiedBy: string;
   isActivated: boolean;
 }
@@ -32,6 +32,7 @@ export interface Tour extends BaseEntity {
   endDateBooking: string;
   tourTemplateId: TourTemplate;
   size: number;
+  discount: number;
   registered: number;
   percent: number;
   departure: string;
