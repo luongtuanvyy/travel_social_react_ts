@@ -3,6 +3,7 @@ import { BlogApi } from '~/api/BlogApi';
 import { Blog as BlogInterface } from '~/types/entity';
 import Blog from '../Blog';
 import ModalImage from '../Modal';
+import { FollowerApi } from '~/api/FollowerApi';
 
 const ListBlogReup = () => {
   const [listBlog, setListBlog] = useState<BlogInterface[]>([]);
@@ -17,6 +18,10 @@ const ListBlogReup = () => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const fetchFollower = async (page: number) => {
+    // await FollowerApi.getFollowersById({ id: number });
   };
 
   useEffect(() => {
@@ -55,7 +60,7 @@ const ListBlogReup = () => {
   }, [page]);
 
   return (
-    <div className="bg-gray-400 rounded-3xl">
+    <div className="bg-gray-200 rounded-3xl">
       {listBlog.map((blog: BlogInterface, index: number) => (
         <Blog blog={blog} key={index} />
       ))}

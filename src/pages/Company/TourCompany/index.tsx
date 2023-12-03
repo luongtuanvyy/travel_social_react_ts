@@ -627,7 +627,7 @@ const TourCompany = () => {
                     />
                   </div>
                 </div>
-                <div className="mt-3 flex justify-end">
+                <div className="mt-6 flex justify-end">
                   <button className="px-5 py-2.5 rounded-lg ">Lưu</button>
                   <button className="px-5 py-2.5 rounded-lg bg-red-200">
                     Đặt lại toàn bộ

@@ -25,6 +25,11 @@ import About from './pages/About';
 import LayoutCompany from './pages/Company/layout';
 import { initFlowbite } from 'flowbite';
 import TourCompany from './pages/Company/TourCompany';
+import Setting from './pages/Setting';
+import Payment from './pages/User/Payment';
+import Information from './pages/User/Book/page/Information';
+import LayoutBooking from './pages/User/Book';
+import Successful from './pages/User/Book/page/Successful';
 
 const App = () => {
   initFlowbite();
@@ -45,6 +50,7 @@ const App = () => {
         <Route path="/place" element={<PlacePage />}></Route>
         <Route path="/newfeed" element={<BlogFeature />}></Route>
         <Route path="/tour" element={<Tours />}></Route>
+        <Route path="/setting" element={<Setting />}></Route>
         <Route path="/profile" element={<ProfileFeature />}>
           <Route path="" element={<Profile />}>
             <Route path="post" element={<Posts />}>
@@ -58,7 +64,11 @@ const App = () => {
         </Route>
         <Route path="/register" element={<RegisterFeature />} />
         <Route path="/newfeed" element={<BlogFeature />} />
-        <Route path="/booking" element={<Booking />} />
+        <Route path="/booking" element={<LayoutBooking />}>
+          <Route path="information" element={<Information />}></Route>
+          <Route path="payment" element={<Payment />}></Route>
+          <Route path="successful" element={<Successful />}></Route>
+        </Route>
         <Route path="/about" element={<About />} />
         <Route path="/company" element={<LayoutCompany />}>
           <Route path="tour" element={<TourCompany />} />

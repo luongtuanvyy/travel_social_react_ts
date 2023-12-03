@@ -14,7 +14,7 @@ const DATA_FEATURE_NAVBAR = [
   { id: 3, name: 'Tour', path: '/tour' },
   { id: 4, name: 'Công ty', path: '/company' },
   { id: 5, name: 'Bảng tin', path: '/newfeed' },
-  { id: 6, name: 'Liên hệ', path: '/contact' },
+  { id: 6, name: 'Liên hệ', path: '/about' },
 ];
 
 const Navbar = () => {
@@ -259,12 +259,12 @@ const Navbar = () => {
                     </a>
                   </li>
                   <li>
-                    <a
-                      href="#"
+                    <Link
+                      to={'/setting'}
                       className="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-400 dark:hover:text-white"
                     >
                       Cài đặt tài khoản
-                    </a>
+                    </Link>
                   </li>
                 </ul>
                 <ul

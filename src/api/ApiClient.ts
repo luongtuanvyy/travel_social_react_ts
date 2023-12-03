@@ -1,13 +1,13 @@
 import axios from 'axios';
 
-export const axiosClientTravel = axios.create({
+const axiosClientTravel = axios.create({
   baseURL: 'https://api.anphuc.me',
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
-export const axiosClientProvince = axios.create({
+const axiosClientProvince = axios.create({
   baseURL: 'https://provinces.open-api.vn',
   headers: {
     'Content-Type': 'application/json',
@@ -15,9 +15,9 @@ export const axiosClientProvince = axios.create({
 });
 
 // Add a request interceptor
-axios.interceptors.request.use(
+axiosClientTravel.interceptors.request.use(
   function (config) {
-    config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
+    config.headers.Authorization = `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4IiwiaWF0IjoxNzAxNTkwMzc5LCJleHAiOjE3MDE1OTM5Nzl9.ob4BKq1yqN4mDhkY6USIhyaNid92PPrOXW2pOt0Ivec`;
     return config;
   },
   function (error) {
@@ -27,7 +27,7 @@ axios.interceptors.request.use(
 );
 
 // Add a response interceptor
-axios.interceptors.response.use(
+axiosClientTravel.interceptors.response.use(
   function (response) {
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
@@ -39,3 +39,5 @@ axios.interceptors.response.use(
     return Promise.reject(error);
   },
 );
+
+export { axiosClientTravel, axiosClientProvince };

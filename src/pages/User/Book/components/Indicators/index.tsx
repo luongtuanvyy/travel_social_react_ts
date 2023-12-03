@@ -42,7 +42,7 @@ const Indicator = () => {
                     <path
                       stroke="currentColor"
                       strokeLinecap="round"
-                      stroke-linejoin="round"
+                      strokeLinejoin="round"
                       strokeWidth="2"
                       d="M1 5.917 5.724 10.5 15 1.5"
                     />
