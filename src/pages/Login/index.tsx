@@ -1,15 +1,15 @@
+import { Link } from 'react-router-dom';
 import FormLogin from './components';
 
 const Login = () => {
-
   return (
-    <div className="grid grid-cols-2 h-screen gap-4 relative">
+    <div className="grid xl:grid-cols-2 h-screen gap-4 relative">
       <div className="absolute top-5 left-5">
         <nav className="flex" aria-label="Breadcrumb">
           <ol className="inline-flex items-center space-x-1 md:space-x-3">
             <li className="inline-flex items-center">
-              <a
-                href="home"
+              <Link
+                to=".."
                 className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-third dark:text-gray-400 dark:hover:text-white"
               >
                 <svg
@@ -25,13 +25,15 @@ const Login = () => {
                   />
                 </svg>
                 Trở về trang chủ
-              </a>
+              </Link>
             </li>
           </ol>
         </nav>
       </div>
-      <FormLogin />
-      <div className="flex justify-center items-center p-4 ">
+      <div className="flex items-center justify-center">
+        <FormLogin />
+      </div>
+      <div className="hidden xl:flex justify-center items-center p-4 ">
         <img
           className="h-full object-cover rounded-xl"
           src="https://wallpapercosmos.com/w/full/a/d/7/22393-3840x2160-desktop-4k-leaf-wallpaper-image.jpg"

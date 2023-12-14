@@ -132,8 +132,7 @@ const FormLogin = () => {
                 Đăng nhập
               </h1>
               <p className="text-center text-sm">
-                Today is a new day. It's your day. You shape it. Sign in to
-                start managing your projects.
+                Đăng nhập vào để nhận được thông báo và nhiều tiện ích từ ứng dụng của chúng tôi
               </p>
               <form
                 className="space-y-4 md:space-y-4"

@@ -1,18 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '~/app/store';
+import { StateApiResponse } from '~/types/api';
+import { Tour } from '~/types/entity';
 
-interface TourState {
-  datas: any[];
-  pageSize: number;
-  totalPages: number;
-  totalItems: number;
-  currentPage: number;
-}
-
-const initialState: TourState = {
+const initialState: StateApiResponse<Tour[]> = {
   datas: [],
   pageSize: 0,
-  totalPages: 0,
+  totalPage: 0,
   totalItems: 0,
   currentPage: 0,
 };
@@ -24,7 +18,7 @@ export const TourSlice = createSlice({
     setTours: (state, action) => {
       state.datas = action.payload.datas;
       state.pageSize = action.payload.pageSize;
-      state.totalPages = action.payload.totalPages;
+      state.totalPage = action.payload.totalPages;
       state.totalItems = action.payload.totalItems;
       state.currentPage = action.payload.currentPage;
     },

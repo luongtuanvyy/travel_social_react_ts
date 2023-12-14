@@ -3,3 +3,9 @@ export type LoginFormValues = {
   password: string;
   remember: boolean;
 };
+
+export type BookingPerson = {
+  gender: boolean;
+  name: string;
+  age: number;
+};

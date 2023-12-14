@@ -1,14 +1,12 @@
+import { useAppSelector } from '~/app/hook';
 import Tour from '~/components/Tour';
-import { Tour as TourInterface } from '~/types/entity';
 
-type Props = {
-  tours: TourInterface[];
-};
+const ListTour = () => {
+  const tours = useAppSelector((state) => state.tour);
 
-const ListTour = (props: Props) => {
   return (
     <div className="grid  gap-10 p-8 mx-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 ">
-      {props.tours.map((tour) => (
+      {tours.datas.map((tour) => (
         <div key={tour.id} className="flex justify-center">
           <Tour tour={tour} />
         </div>

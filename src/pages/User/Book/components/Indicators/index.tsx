@@ -1,10 +1,10 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 const DATE_PAYMENT = [
   {
     step: 'Thông tin đặt tour',
-    link: '/booking',
+    link: '/booking/information',
   },
   {
     step: 'Thanh toán',
@@ -20,18 +20,22 @@ const Indicator = () => {
   const location = useLocation();
   const { pathname } = location;
 
+
   return (
     <div className="w-[800px] min-w-[800px]">
       <ol className="flex items-center">
         {DATE_PAYMENT.map((item, index) => (
-          <li className={`relative ${index < 2 ? 'w-full' : 'w-fit'} mb-6`}>
+          <li
+            key={index}
+            className={`relative ${index < 2 ? 'w-full' : 'w-fit'} mb-6`}
+          >
             <div className="flex items-center">
               <div
                 className={`z-10 flex items-center justify-center w-4 h-4 ${
                   pathname === item.link ? 'bg-secondary' : 'bg-primary'
                 } rounded-full ring-0 ring-white dark:bg-blue-900 sm:ring-8 dark:ring-gray-900 shrink-0`}
               >
-                {pathname === item.link && (
+                { pathname.startsWith(item.link) && (
                   <svg
                     className="w-2 h-2 text-blue-100 dark:text-blue-300"
                     aria-hidden="true"

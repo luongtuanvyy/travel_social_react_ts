@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
+import { FollowerApi } from '~/api/FollowerApi';
 import { useAppSelector } from '~/app/hook';
 import { member } from '~/assets/images';
 import { Action, Feed, History, Tick, UserIcon } from '~/assets/svg';
@@ -14,11 +15,24 @@ const Aside = () => {
     { svg: <History />, path: '/profile/history' },
   ];
 
-  useEffect(() => {}, [user]);
+  useEffect(() => {
+    if (user) {
+      const fetchData = async () => {
+        await FollowerApi.getFollowersById({ id: user.id })
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err) => {});
+      };
+      fetchData();
+    }
+  }, [user]);
 
   return (
     <aside
-      className={`fixed mt-[76px] top-0 left-0 z-30 w-96 pr-5
+      className={`fixed mt-[76px] top-0 left-0 z-30  ${
+        pathname === '/newfeed' ? 'w-96' : 'w-fit'
+      } pr-5
     h-screen transition-transform -translate-x-full md:translate-x-0 dark:bg-gray-800 dark:border-gray-700`}
       aria-label="Sidenav"
       id="drawer-navigation"

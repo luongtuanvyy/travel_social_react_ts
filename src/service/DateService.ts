@@ -53,3 +53,49 @@ export const convertDateToString = (dated: Date | string): string => {
     newDate.getMonth() + 1
   }, ${newDate.getFullYear()}`;
 };
+
+export const convertDateToFullString = (dated: Date | string): string => {
+  let newDate;
+  let date;
+  if (typeof dated === 'string') {
+    const dateParts = dated.split('-');
+    date = new Date(`${dateParts[1]}/${dateParts[0]}/${dateParts[2]}`);
+  } else {
+    date = dated;
+  }
+  newDate = new Date(date);
+  return `${
+    date.getDay() <= 5 ? `Thứ ${date.getDay() + 1}` : 'Chủ Nhật'
+  }, ${newDate.getDate()} Tháng ${
+    newDate.getMonth() + 1
+  }, ${newDate.getFullYear()}`;
+};
+
+export const convertTimeToString = (dated: Date | string): string => {
+  let newDate;
+  let date;
+  if (typeof dated === 'string') {
+    const dateParts = dated.split('-');
+    date = new Date(`${dateParts[1]}/${dateParts[0]}/${dateParts[2]}`);
+  } else {
+    date = dated;
+  }
+  newDate = new Date(date);
+  return `${newDate.getHours()}:${newDate.getMinutes()}`;
+};
+
+export const getAgeBefore = (age: number): string => {
+  const now = new Date();
+  return `ngày ${now.getDay()} tháng ${now.getMonth()} năm ${
+    now.getFullYear() - age
+  }`;
+};
+
+export const getAge = (date: string) => {
+  const dateParts = date.split('-');
+  const birthDate = new Date(`${dateParts[1]}/${dateParts[0]}/${dateParts[2]}`);
+  const now = new Date();
+  const diff = now.getTime() - birthDate.getTime();
+  const age = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
+  return age;
+};

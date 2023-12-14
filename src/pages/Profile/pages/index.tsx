@@ -5,8 +5,8 @@ const Profile = () => {
   const user = useAppSelector((state) => state.auth.user);
 
   const feature = [
-    { name: 'Bảng tin', path: '/profile/post' },
-    { name: 'Đăng lại', path: '/profile/post/reup' },
+    { name: 'Bảng tin', path: '/profile' },
+    { name: 'Đăng lại', path: '/profile/reup' },
     { name: 'Hình ảnh', path: '/profile/images' },
     { name: 'Người theo dõi', path: '/profile/follower' },
     { name: 'Giới thiệu', path: '/profile/about' },
@@ -14,17 +14,21 @@ const Profile = () => {
   const path = useLocation().pathname;
 
   return (
-    <div className="pt-[76px] pl-[80px] bg-gray-400">
-      <div className="mx-auto my-4 mt-8 bg-gray-100 rounded-3xl max-w-6xl">
+    <div className="pt-[76px] pl-[80px] bg-gray-100">
+      <div className="mx-auto my-4 mt-8 bg-white rounded-3xl max-w-6xl">
         <div className="relative bg-white rounded-t-3xl">
           <img
             className="rounded-3xl h-72 w-full object-cover"
             src="https://wallpapercosmos.com/w/full/7/e/c/1473768.jpg"
             alt=""
           />
-          <div className="absolute bottom-0 translate-y-12 right-1/2 translate-x-1/2 h-40 w-40 flex items-center justify-center rounded-full bg-white ">
-            <img className="h-36 rounded-full" src={user?.avatar} alt="" />
-            <div className="absolute bottom-4 right-4 text-blue-500 bg-white rounded-full">
+          <div className="absolute border-4 bottom-0 translate-y-12 right-1/2 translate-x-1/2 h-40 w-40 flex items-center justify-center rounded-full bg-white ">
+            <img
+              className="w-full h-full rounded-full"
+              src={user?.avatar}
+              alt=""
+            />
+            <div className="absolute bottom-0 right-4 text-blue-500 bg-white rounded-full">
               <svg
                 width="28"
                 height="28"
@@ -42,7 +46,7 @@ const Profile = () => {
             </div>
           </div>
         </div>
-        <div className="grid pt-12 bg-white pb-6 grid-cols-3 place-items-center rounded-b-3xl">
+        <div className="grid pt-12 bg-white pb-6 grid-cols-3 place-items-center border-b-2 rounded-b-3xl">
           <div className="grid grid-cols-3 w-full">
             <div className="p-1.5 pt-2 flex flex-col items-center justify-center">
               <span className="text-xl font-medium ">368</span>
@@ -107,7 +111,7 @@ const Profile = () => {
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-5 rounded-b-3xl text-sm p-5 bg-gray-100">
+        <div className="grid grid-cols-5 rounded-b-3xl text-sm p-5 bg-white">
           {feature.map((item, index) => (
             <div key={index} className="border-r w-full flex justify-center">
               <NavLink to={item.path}>

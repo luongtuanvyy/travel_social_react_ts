@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 import { useAppSelector } from '~/app/hook';
 
 const Posts = () => {
@@ -45,7 +45,7 @@ const Posts = () => {
               Photo <span className="text-secondary">74</span>
             </span>
             <span className="grow flex justify-end items-center text-sm text-secondary font-medium">
-              Xem tất cả
+              <Link to={'/profile/images'}>Xem tất cả</Link>
             </span>
           </div>
           <div>
@@ -122,7 +122,7 @@ const Posts = () => {
               Người theo dõi <span className="text-secondary">74</span>
             </span>
             <span className="grow flex justify-end items-center text-sm text-secondary font-medium">
-              Xem tất cả
+              <Link to={'/profile/follower'}>Xem tất cả</Link>
             </span>
           </div>
           <div>

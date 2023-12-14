@@ -44,10 +44,10 @@ const Home = () => {
     <div>
       <Navbar />
       <div className="releative">
-        <div className="h-screen">
-          <div className="relative w-full h-5/6 ">
+        <div className="">
+          <div className="relative w-full">
             <img
-              className="object-cover w-full h-full"
+              className="object-cover w-full h-screen"
               src="https://wallpapercosmos.com/w/full/8/6/4/16953-3840x2160-desktop-4k-lake-background.jpg"
               alt=""
             />
@@ -75,12 +75,12 @@ const Home = () => {
                     fillRule="evenodd"
                     d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
                     clipRule="evenodd"
-                  ></path>
+                  />
                 </svg>
               </Link>
             </div>
           </div>
-          <div className="relative md:absolute py-4 left-1/2 -translate-x-1/2 w-full md:w-2/3 bottom-0 -translate-y-1/3 bg-white shadow-lg rounded-b-lg rounded-r-lg z-30">
+          <div className="hidden xl:relative md:absolute py-4 left-1/2 -translate-x-1/2 w-full md:w-2/3 bottom-0 -translate-y-1/3 bg-white shadow-lg rounded-b-lg rounded-r-lg z-30">
             <div className="relative md:absolute w-fit top-0 md:-translate-y-3/4 bg-white p-2 pb-4 rounded-t-lg px-10">
               <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-0 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                 Chuyến đi
@@ -132,7 +132,7 @@ const Home = () => {
                     <input
                       type="number"
                       id="visitors"
-                      className="bg-gray-50 border-0 text-gray-900 text-sm rounded-lg focus:ring-0 focus:border-0 block w-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      className="bg-gray-50 border-0 text-gray-900 text-sm rounded-lg focus:ring-0 focus:border-0 block w-20 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder="1"
                       required
                     />
@@ -162,7 +162,7 @@ const Home = () => {
                       htmlFor="countries"
                       className="block ml-2 text-sm font-medium text-gray-900 dark:text-white"
                     >
-                      Bắt đầu
+                      Kết thúc
                     </label>
                     <Datepicker className="picker" language="vn" />
                   </div>
@@ -177,10 +177,10 @@ const Home = () => {
             </form>
           </div>
         </div>
-        <div className="flex flex-col justify-evenly bg-gray-00 h-screen pt-12">
+        <div className="flex flex-col justify-evenly xl:pt-12">
           <div className="">
-            <div className="grid grid-cols-4 px-20 gap-10">
-              <div className="p-4 ">
+            <div className="grid xl:grid-cols-4 grid-cols-1 px-10 xl:px-20 gap-10">
+              <div className="xl:p-4">
                 <p className="text-secondary mb-2">Chúng tôi mang lại</p>
                 <p className="text-3xl font-semibold mb-2">
                   Những gợi ý dành cho bạn
@@ -190,7 +190,7 @@ const Home = () => {
                   tôi dành cho bạn{' '}
                 </p>
               </div>
-              <div className=" rounded-lg px-4">
+              <div className="rounded-lg xl:px-4">
                 <img className="mb-2" src={earth} alt="" />
                 <p className="text-lg font-semibold mb-2">Rất nhiều địa điểm</p>
                 <p className="text-xs text-gray-500">
@@ -210,7 +210,7 @@ const Home = () => {
                   </p>
                 </div>
               </div>
-              <div className=" rounded-lg px-4">
+              <div className="rounded-lg xl:px-4">
                 <img className="mb-2" src={company} alt="" />
                 <p className="text-lg font-semibold mb-2">Sự hỗ trợ hàng đầu</p>
                 <p className="text-xs text-gray-500">
@@ -220,8 +220,8 @@ const Home = () => {
               </div>
             </div>
           </div>
-          <div>
-            <div className="px-20">
+          <div className="">
+            <div className="p-10 xl:px-20">
               <h1 className="text-lg font-medium ">Xu hướng mùa đông 2023</h1>
               <p className="text-sm text-gray-600">
                 Dựa trên kết quả tìm kiếm và đặt tour của người dùng
@@ -232,7 +232,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <div className="h-screen pt-24 px-20 flex flex-col">
+        <div className="p-10 xl:pt-24 xl:px-20 flex flex-col">
           <div className="mb-4">
             <p className="text-lg mb-2 font-medium">Địa điểm hàng đầu</p>
             <p className="text-sm text-gray-500">

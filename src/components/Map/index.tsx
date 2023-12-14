@@ -49,7 +49,7 @@ const MapLeaflet = (prop: MapLeafletProps) => {
                       className="flex items-center text-xs "
                       style={{ margin: '1px', color: 'gray' }}
                     >
-                      {tour.tourTemplateId.name}
+                      {tour.name}
                     </p>
                     <p
                       className="flex space-x-1 items-center"

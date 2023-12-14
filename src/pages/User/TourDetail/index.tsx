@@ -1,6 +1,6 @@
 import { initTabs } from 'flowbite';
-import React, { useLayoutEffect, useState } from 'react';
-import { useLocation, useSearchParams } from 'react-router-dom';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
+import { useLocation, useParams, useSearchParams } from 'react-router-dom';
 import { TourApi } from '~/api/TourApi';
 import { StarNoneFill, Tick } from '~/assets/svg';
 import Star from '~/assets/svg/Star';
@@ -40,14 +40,13 @@ const DATA_RATE: Rate[] = [
 ];
 
 const TourDetail = () => {
-  const [searchParams] = useSearchParams();
+  const { id } = useParams();
   const [tour, setTour] = useState<Tour>();
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const fetchData = async () => {
-      const id = searchParams.get('id');
       if (id) {
         await TourApi.getTourById(parseInt(id) ?? 8)
           .then((response) => {
@@ -57,8 +56,6 @@ const TourDetail = () => {
           .catch((err) => console.log(err));
       }
     };
-    console.log(searchParams.get('id'));
-
     fetchData();
   }, []);
 
@@ -86,7 +83,7 @@ const TourDetail = () => {
                 <div className="grid grid-cols-3">
                   <div className="col-span-2">
                     <p className="font-medium text-xl mb-4">
-                      {tour.tourTemplateId.name}
+                      {tour.name}
                     </p>
                     <p className="text-gray-500 text-sm mb-4">
                       <span className="font-medium">Nơi khởi hành:</span>{' '}
@@ -98,7 +95,7 @@ const TourDetail = () => {
                           Thời gian
                         </span>
                         <br />
-                        {tour.startDate} - {tour.startEnd}
+                        {tour.startDate} - {tour.endDate}
                       </p>
                       <p className="text-sm text-gray-500">
                         <span className="font-bold text-gray-900 mb-2">
@@ -127,7 +124,7 @@ const TourDetail = () => {
                     </div>
                     <div>
                       <button className="px-5 py-2 border border-gray-700 rounded-lg">
-                        <Link to={`/booking?id=${tour.id}`}>Đặt ngay</Link>
+                        <Link to={`/booking/information/${tour.id}`}>Đặt ngay</Link>
                       </button>
                     </div>
                   </div>
@@ -136,7 +133,7 @@ const TourDetail = () => {
                 <div className="mt-4">
                   <p className="text-lg font-medium mb-2">Mô tả</p>
                   <p className="text-sm text-gray-600">
-                    {tour.tourTemplateId.description}
+                    {tour.description}
                   </p>
                 </div>
               </div>

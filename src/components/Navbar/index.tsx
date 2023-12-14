@@ -1,6 +1,6 @@
 import { signOut } from 'firebase/auth';
 import { initFlowbite } from 'flowbite';
-import { useLayoutEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '~/app/hook';
 import { RootState } from '~/app/store';
@@ -10,16 +10,16 @@ import { authAction, selectLoginWith, selectUser } from '~/slice/AuthSlice';
 
 const DATA_FEATURE_NAVBAR = [
   { id: 1, name: 'Trang chủ', path: '/home' },
-  { id: 2, name: 'Địa điểm', path: '/place' },
-  { id: 3, name: 'Tour', path: '/tour' },
+  { id: 2, name: 'Địa điểm', path: '/places' },
+  { id: 3, name: 'Tour', path: '/tours' },
   { id: 4, name: 'Công ty', path: '/company' },
   { id: 5, name: 'Bảng tin', path: '/newfeed' },
   { id: 6, name: 'Liên hệ', path: '/about' },
 ];
 
 const Navbar = () => {
-  initFlowbite();
   const location = useLocation();
+  const [showNavbar, setShowNavbar] = useState(false);
   const [scrollY, setScrollY] = useState(0);
   const navigate = useNavigate();
   const user = useAppSelector((state: RootState) => selectUser(state));
@@ -41,14 +41,6 @@ const Navbar = () => {
     const scrollYWindow = window.scrollY;
     setScrollY(scrollYWindow);
   };
-
-  useLayoutEffect(() => {
-    window.addEventListener('scroll', handleScrollY);
-    return () => {
-      window.removeEventListener('scroll', handleScrollY);
-    };
-  }, []);
-
   const bgTransparent = () => {
     if (
       (location.pathname === '/home' || location.pathname === '/') &&
@@ -58,6 +50,13 @@ const Navbar = () => {
     }
     return true;
   };
+  // useEffect(() => {},)
+  useEffect(() => {
+    window.addEventListener('scroll', handleScrollY);
+    return () => {
+      window.removeEventListener('scroll', handleScrollY);
+    };
+  }, []);
 
   return (
     <nav
@@ -66,12 +65,11 @@ const Navbar = () => {
       } py-2.5 dark:bg-gray-800 dark:border-gray-700 fixed h-[76px] left-0 right-0 top-0 z-50`}
     >
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 w-full">
-        <div className=" pl-5 flex justify-start items-center">
+        <div className="pl-5 order-1 flex justify-start items-center">
           <button
-            // data-drawer-target="drawer-navigation"
-            // data-drawer-toggle="drawer-navigation"
+            onClick={() => setShowNavbar(!showNavbar)}
             aria-controls="drawer-navigation"
-            className="p-2 text-gray-600 rounded-lg cursor-pointer xl:hidden hover:text-gray-900 hover:bg-gray-100 focus:bg-gray-100 dark:focus:bg-gray-700 focus:ring-2 focus:ring-gray-100 dark:focus:ring-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+            className="p-2 text-gray-600 rounded-lg cursor-pointer xl:hidden hover:text-gray-900 dark:focus:bg-gray-700 focus:ring-2 focus:ring-gray-100 dark:focus:ring-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
           >
             <svg
               aria-hidden="true"
@@ -145,8 +143,12 @@ const Navbar = () => {
             </div>
           </form>
         </div>
-        <div className="hidden xl:flex justify-center col-span-2">
-          <ul className="flex flex-wrap text-sm font-medium text-center text-gray-500 dark:border-gray-700 dark:text-gray-400">
+        <div
+          className={`${
+            showNavbar ? 'block ' : 'hidden'
+          } xl:flex xl:justify-center col-span-2 pb-4 xl:pb-0 order-3 xl:order-2 bg-gray-500 xl:bg-transparent`}
+        >
+          <ul className="flex flex-col xl:flex-row text-sm font-medium xl:text-center pl-11 text-gray-500 dark:border-gray-700 dark:text-gray-400">
             {DATA_FEATURE_NAVBAR.map((item, index) => (
               <li key={index} className="mr-6">
                 <Link
@@ -161,13 +163,16 @@ const Navbar = () => {
             ))}
           </ul>
         </div>
-        <div className="hidden sm:flex items-center justify-end pr-8">
+        <div
+          className={`${
+            showNavbar ? 'flex' : 'hidden'
+          } xl:flex flex-reverse xl:bg-transparent py-4 xl:py-0 order-2 xl:order-3 bg-gray-500 col-span-2 xl:col-span-1 items-center xl:justify-end pr-8`}
+        >
           {user && Object.keys(user).length !== 0 ? (
             <>
               <button
                 type="button"
-                // data-dropdown-toggle="notification-dropdown"
-                className={`p-2 mr-4 ${
+                className={`p-2 mr-4 hidden xl:block  ${
                   bgTransparent() ? 'bg-gray-50 text-gray-700' : 'text-white'
                 } text-gray-500 rounded-full hover:text-gray-900 hover:bg-gray-200 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600`}
               >
@@ -182,13 +187,11 @@ const Navbar = () => {
                 <div className="block py-2 px-4 text-base font-medium text-center text-gray-700 bg-gray-50 dark:bg-gray-600 dark:text-gray-300">
                   Notifications
                 </div>
-                {/* <ListNotification /> */}
               </div>
 
               <button
                 type="button"
-                // data-dropdown-toggle="notification-dropdown"
-                className={`p-2  ${
+                className={`p-2 hidden xl:block  ${
                   bgTransparent() ? 'bg-gray-50 text-gray-700' : 'text-white'
                 } text-gray-500 rounded-full hover:text-gray-900 hover:bg-gray-200 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600`}
               >
@@ -202,12 +205,11 @@ const Navbar = () => {
                 <div className="block py-2 px-4 text-base font-medium text-center text-gray-700 bg-gray-50 dark:bg-gray-600 dark:text-gray-300">
                   Thông báo
                 </div>
-                {/* <ListNotification /> */}
               </div>
 
               <button
                 type="button"
-                className="flex mx-3 text-sm  rounded-full md:mr-0 focus:ring-0 dark:focus:ring-gray-600"
+                className="flex flex-row-reverse xl:flex-row pl-11 xl:pl-0 mx-3 text-sm  rounded-full md:mr-0 focus:ring-0 dark:focus:ring-gray-600"
                 id="user-menu-button"
                 aria-expanded="false"
                 data-dropdown-toggle="dropdown"
@@ -251,12 +253,12 @@ const Navbar = () => {
                   aria-labelledby="dropdown"
                 >
                   <li>
-                    <a
-                      href="profile"
+                    <Link
+                      to={`/${user.id}`}
                       className="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-400 dark:hover:text-white"
                     >
                       Thông tin cá nhân
-                    </a>
+                    </Link>
                   </li>
                   <li>
                     <Link

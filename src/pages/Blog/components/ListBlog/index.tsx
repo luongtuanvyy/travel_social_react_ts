@@ -3,9 +3,8 @@ import { BlogApi } from '~/api/BlogApi';
 import { Blog as BlogInterface } from '~/types/entity';
 import Blog from '../Blog';
 import ModalImage from '../Modal';
-import { FollowerApi } from '~/api/FollowerApi';
 
-const ListBlogReup = () => {
+const ListBlog = () => {
   const [listBlog, setListBlog] = useState<BlogInterface[]>([]);
   const [page, setPage] = useState(1);
   const [scrollY, setScrollY] = useState(0);
@@ -18,10 +17,6 @@ const ListBlogReup = () => {
     } catch (error) {
       console.log(error);
     }
-  };
-
-  const fetchFollower = async (page: number) => {
-    // await FollowerApi.getFollowersById({ id: number });
   };
 
   useEffect(() => {
@@ -60,7 +55,7 @@ const ListBlogReup = () => {
   }, [page]);
 
   return (
-    <div className="bg-gray-200 rounded-3xl">
+    <div className="bg-gray-100 rounded-3xl">
       {listBlog.map((blog: BlogInterface, index: number) => (
         <Blog blog={blog} key={index} />
       ))}
@@ -72,8 +67,9 @@ const ListBlogReup = () => {
       >
         <ModalImage />
       </div>
+      
     </div>
   );
 };
 
-export default ListBlogReup;
+export default ListBlog;

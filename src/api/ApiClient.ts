@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosClientTravel = axios.create({
-  baseURL: 'https://api.anphuc.me',
+  baseURL: 'https://travelsocials.azurewebsites.net',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -17,7 +17,7 @@ const axiosClientProvince = axios.create({
 // Add a request interceptor
 axiosClientTravel.interceptors.request.use(
   function (config) {
-    config.headers.Authorization = `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4IiwiaWF0IjoxNzAxNTkwMzc5LCJleHAiOjE3MDE1OTM5Nzl9.ob4BKq1yqN4mDhkY6USIhyaNid92PPrOXW2pOt0Ivec`;
+    config.headers.Authorization = `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyMCIsImlhdCI6MTcwMjEyODYwMCwiZXhwIjoxNzAyMTMyMjAwfQ.3C3k3S_tdSbb59ZzFjIjjypuHNWQ0a5HTPtVJdVTp84`;
     return config;
   },
   function (error) {

@@ -25,7 +25,7 @@ const BlogFeature = () => {
     <div className="bg-gray-200 z-10">
       <Navbar />
       <Aside />
-      
+
       <RightSide />
       <main className="p-5 min-w-[500px] max-w-3xl lg:mx-auto h-auto pt-24  grid grid-cols-1 gap-y-5">
         <NewPost handleNewPost={handleNewPost} />

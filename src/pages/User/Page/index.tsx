@@ -1,30 +1,34 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { PlaceApi } from '~/api/PlaceApi';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { useAppSelector } from '~/app/hook';
 import Navbar from '~/components/Navbar';
 
-import { PlaceAction } from '~/slice/PlaceSlide';
+import { PlaceApi } from '~/api/PlaceApi';
+import Pagination from '~/components/Pagination';
 import FilterPlace from './components/Filter';
 import Places from './components/Places';
-import Pagination from '~/components/Pagination';
+import { PlaceAction } from '~/slice/PlaceSlide';
+import { set } from 'firebase/database';
 
 const PlacePage = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [pageCurrent, setPageCurrent] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
-  const [page, setPage] = useState<number>((): number => {
-    let pageURL = parseInt(
-      new URLSearchParams(location.search).get('page') ?? '1',
-    );
-    return pageURL;
-  });
+  const [pageParam, setPageParam] = useSearchParams();
+  const page = pageParam.get('page');
   const place = useAppSelector((state) => state.places);
 
   useEffect(() => {
+    if (Number(page) < 1 || isNaN(Number(page))) {
+      setPageParam({ page: '1' });
+    }
+    setPageCurrent(Number(page));
+  }, [page]);
+
+  useEffect(() => {
     const fetchData = async () => {
-      await PlaceApi.getPlaces({ pageSize: 9, page: page - 1 })
+      await PlaceApi.getPlaces({ pageSize: 9, page: Number(page) - 1 })
         .then((response) => {
           try {
             dispatch(
@@ -46,12 +50,11 @@ const PlacePage = () => {
         });
     };
     fetchData();
-  }, [page]);
+  }, [pageCurrent]);
 
-  const handlePage = (currentPage: number) => {
-    setPage(currentPage);
+  const handlePage = (currentPage: string) => {
+    setPageParam({ page: currentPage });
     setLoading(true);
-    navigate(`/places?page=${currentPage}`);
   };
 
   return (
@@ -63,7 +66,7 @@ const PlacePage = () => {
       </div>
       <Pagination
         handlePage={handlePage}
-        currentPage={page}
+        currentPage={page ? parseInt(page) : 1}
         total={place?.totalItems}
         pageCount={place?.totalPages}
       />

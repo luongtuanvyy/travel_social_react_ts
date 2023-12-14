@@ -15,10 +15,13 @@ export const TourApi = {
       throw error;
     }
   },
-  getAllTour: async (): Promise<
-    AxiosResponse<ApiRespone<StateApiResponse<Tour[]>>>
-  > => {
-    const response = await axiosClientTravel.get('/api/public/tours');
+  getAllTour: async (params: {
+    page: number;
+    pageSize: number;
+  }): Promise<AxiosResponse<ApiRespone<StateApiResponse<Tour[]>>>> => {
+    const urlparams = `/api/public/tours?${queryString.stringify(params)}`;
+
+    const response = await axiosClientTravel.get(urlparams);
     return response;
   },
   getTourById: async (

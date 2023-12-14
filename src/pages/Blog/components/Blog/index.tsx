@@ -1,11 +1,16 @@
 import Heart from '~/assets/svg/Heart';
-import { convertDate } from '~/service/DateService';
+import {
+  convertDate,
+  convertDateToFullString,
+  convertDateToString,
+} from '~/service/DateService';
 import { Blog as BlogType } from '~/types/entity';
 import ImageBlog from '../Image';
 import { BlogActions } from '../../../../slice/BlogSlice';
 import { useAppDispatch } from '~/app/hook';
-import { HeartBorder } from '~/assets/svg';
-import { useEffect } from 'react';
+import { Feed, HeartBorder, More } from '~/assets/svg';
+import { memo, useRef, useEffect, useState } from 'react';
+import User from '~/assets/svg/User';
 
 type BlogProps = {
   blog: BlogType;
@@ -14,16 +19,26 @@ type BlogProps = {
 const Blog = (props: BlogProps) => {
   const { blog } = props;
   const dispatch = useAppDispatch();
+  const [isMouseOver, setIsMouseOver] = useState(false);
+  const [hoverShowProfile, setHoverShowProfile] = useState(false);
+  const hoverProfile = useRef<NodeJS.Timeout>();
+  useEffect(() => {
+    if (isMouseOver) {
+      hoverProfile.current = setTimeout(() => {
+        setHoverShowProfile(true);
+      }, 500);
+    } else {
+      clearTimeout(hoverProfile.current!);
+      setHoverShowProfile(false);
+    }
+  }, [isMouseOver]);
 
   const setBlog = () => {
     dispatch(BlogActions.modifyBlog(blog));
   };
-  useEffect(() => {
-    console.log(blog.createdAt.toString());
-  }, []);
 
   return (
-    <div className="mb-5 bg-white rounded-2xl">
+    <div className="mb-5 bg-white rounded-2xl relative">
       {blog.blogid == 'blogid 1' && (
         <a
           href="#"
@@ -57,26 +72,34 @@ const Blog = (props: BlogProps) => {
           }`}
         >
           <div className={` ${blog.blogid == 'blogid 1' && 'order-2'}`}>
-            <a
-              href="#"
-              className="flex flex-row rounded-t-lg bg-white dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
-            >
+            <div className="flex flex-row rounded-t-lg bg-white dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
               <div className="image flex justify-center items-center pl-5">
                 <img
+                  onMouseEnter={() => setIsMouseOver(true)}
+                  onMouseLeave={() => setIsMouseOver(false)}
                   className="object-cover h-[40px] w-[40px] rounded-full"
                   src={blog.avatar}
                   alt=""
                 />
               </div>
-              <div className="flex flex-col justify-between p-5 leading-normal">
-                <h5 className="text-sm font-bold tracking-tight text-gray-700 dark:text-white">
+              <div className="flex flex-col relative justify-between p-3 leading-normal">
+                <h5
+                  onMouseEnter={() => setIsMouseOver(true)}
+                  onMouseLeave={() => setIsMouseOver(false)}
+                  className="text-sm font-bold tracking-tight text-gray-700 dark:text-white"
+                >
                   {blog.name}
                 </h5>
                 <p className="text-xs font-normal text-gray-700 dark:text-gray-400">
                   {convertDate(blog.createdAt)}
                 </p>
+                <div className="absolute hidden bg-gray-100 border bottom-0 translate-y-full -translate-x-12 rounded-lg">
+                  <p className="text-xs py-1.5 px-5 whitespace-nowrap">
+                    {convertDateToFullString(blog.createdAt)}
+                  </p>
+                </div>
               </div>
-            </a>
+            </div>
             <p className="p-5 pt-0">{blog.description}</p>
           </div>
           <div className="image p-5 py-0 ">
@@ -224,8 +247,44 @@ const Blog = (props: BlogProps) => {
           </div>
         </div>
       </div>
+      <div
+        className={`absolute ${
+          !hoverShowProfile && 'hidden'
+        } w-96 h-fit bg-white shadow-lg border-2 top-10 left-10 rounded-2xl pb-4`}
+      >
+        <div className="p-4 flex space-x-3">
+          <img
+            className="w-20 h-20 object-cover rounded-full"
+            src="https://image.lexica.art/full_webp/05ca2b3c-dcca-4c47-999a-ba313cf0aac6"
+            alt=""
+          />
+          <div>
+            <p className="text-xl font-medium">Lương Tuấn Vỹ</p>
+            <p className="text-sm text-gray-700 flex">
+              Đã đăng <span className="mx-1 font-medium"> 120 </span>bài viết
+            </p>
+            <p className="text-sm text-gray-700">
+              <span className="font-medium">Hoàng Chương</span>{' '}
+              <span>và 400 người khác đang theo dõi</span>
+            </p>
+            <p className="text-sm text-gray-700 flex">
+              Đang theo dõi <span className="mx-1 font-medium"> Tấn Tài </span>{' '}
+              và 20 người khác
+            </p>
+          </div>
+        </div>
+        <div className="flex justify-evenly space-x-2">
+          <button className="py-2 px-7 rounded-lg bg-secondary text-white">
+            Theo dõi
+          </button>
+          <button className="py-2 px-7 rounded-lg bg-gray-50">Thích</button>
+          <button className="py-2 px-7 rounded-lg">
+            <More />
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
 
-export default Blog;
+export default memo(Blog);

@@ -8,7 +8,6 @@ export interface BaseEntity {
 }
 
 export interface User extends BaseEntity {
-  accountName: string;
   address: string;
   avatar: string;
   birthday: string;
@@ -23,14 +22,24 @@ export interface User extends BaseEntity {
   vip: boolean;
 }
 
+export interface Booking extends BaseEntity {
+  accountId: string;
+  desciption: string;
+  member: BookingPerson[];
+}
+
+export interface BookingPerson extends BaseEntity {}
+
 export interface Tour extends BaseEntity {
   name: string;
+  adult: number;
+  children: number;
+  baby: number;
   description: string;
   startDate: string;
-  startEnd: string;
+  endDate: string;
   startDateBooking: string;
   endDateBooking: string;
-  tourTemplateId: TourTemplate;
   size: number;
   discount: number;
   registered: number;
