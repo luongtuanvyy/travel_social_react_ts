@@ -1,4 +1,3 @@
-import React from 'react';
 import { Crash, Edit } from '~/assets/svg';
 import { BookingPerson } from '~/types/form';
 

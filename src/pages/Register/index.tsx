@@ -1,8 +1,7 @@
-import { Link } from 'react-router-dom';
-import FormRegister from './components/FormRegister.tsx';
-import { TabTitle } from '~/utils/TabTilte.ts';
-import Loading from '~/components/Loading/index.tsx';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { TabTitle } from '~/utils/TabTilte.ts';
+import FormRegister from './components/FormRegister.tsx';
 
 const RegisterFeature = () => {
   TabTitle('Đăng ký');

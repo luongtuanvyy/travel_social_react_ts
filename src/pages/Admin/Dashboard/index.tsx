@@ -1,4 +1,3 @@
-import Navbar from '~/components/Admin/Navbar';
 import SidebarAdmin from '~/components/Admin/SidebarAdmin';
 import Content from './components/Content';
 

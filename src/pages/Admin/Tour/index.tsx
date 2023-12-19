@@ -43,14 +43,16 @@ const TourAdmin = () => {
     };
     fetchData();
   }, []);
-  const handlePage = async (page: number) => {};
+  const handlePage = async (page: number) => {
+    console.log(page);
+  };
 
   return (
     <div className="grid grid-cols-5">
       <div className="bg-gray-200 p-5 pr-0">
         <div className="h-full bg-white rounded-lg p-5">
           <div>
-            <div className='pt-5 px-5'>
+            <div className="pt-5 px-5">
               <p className="font-medium">Địa điểm</p>
               <select
                 className="mt-3 border text-sm border-gray-400 rounded-lg w-fit h-fit"
@@ -60,7 +62,7 @@ const TourAdmin = () => {
                 <option value="">Thành phố Hồ Chí Minh</option>
               </select>
             </div>
-            <div className='pt-5 px-5'>
+            <div className="pt-5 px-5">
               <p className="font-medium mt-3">Trạng thái</p>
               <div className="mt-3 flex flex-col space-y-2">
                 {DATA_STATUS_TOUR.map((item, index) => (
@@ -82,7 +84,7 @@ const TourAdmin = () => {
                 ))}
               </div>
             </div>
-            <div className='pt-5 px-5'>
+            <div className="pt-5 px-5">
               <p className="font-medium mt-3">Số lượng vị trí trống</p>
               <div className="mt-3 flex flex-col space-y-2">
                 {DATA_STATUS_SIZE.map((item, index) => (

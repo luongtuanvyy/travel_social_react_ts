@@ -1,4 +1,3 @@
-import React from 'react';
 import { useAppSelector } from '~/app/hook';
 import { More } from '~/assets/svg';
 

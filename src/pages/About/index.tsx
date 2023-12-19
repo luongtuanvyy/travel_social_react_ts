@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import { Plane } from '~/assets/svg';
 import Navbar from '~/components/Navbar';

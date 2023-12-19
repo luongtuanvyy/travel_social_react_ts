@@ -1,7 +1,5 @@
-import React from 'react';
 import { useAppSelector } from '~/app/hook';
 import { Edit } from '~/assets/svg';
-import Navbar from '~/components/Navbar';
 
 const Setting = () => {
   const user = useAppSelector((state) => state.auth.user);

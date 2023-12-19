@@ -20,14 +20,14 @@ const Comment = (props: CommentProps) => {
   const user = useAppSelector((state) => state.auth.user);
 
   const {
-    register,
-    handleSubmit,
-    formState: { errors },
+    // register,
+    // handleSubmit,
+    // formState: { errors },
   } = useForm<Inputs>();
 
-  const onSubmit = (data: string) => {
-    console.log(data);
-  };
+  // const onSubmit = (data: string) => {
+  //   console.log(data);
+  // };
 
   return (
     <div>

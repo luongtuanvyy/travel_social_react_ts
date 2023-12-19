@@ -1,21 +1,21 @@
-import React, { useState } from 'react';
+import { yupResolver } from '@hookform/resolvers/yup';
 import {
   AuthProvider,
   GoogleAuthProvider,
   signInWithPopup,
   UserCredential,
 } from 'firebase/auth';
+import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
-import { auth, providerFacebook, providerGoogle } from '~/firebase/config';
-import { LoginFormValues } from '~/types/form';
-import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { AuthenticationApi } from '~/api/AuthenticationApi';
 import { useAppDispatch } from '~/app/hook';
-import { authAction } from '~/slice/AuthSlice';
 import { Eye, EyeHide } from '~/assets/svg';
-import toast from 'react-hot-toast';
+import { auth, providerFacebook, providerGoogle } from '~/firebase/config';
+import { authAction } from '~/slice/AuthSlice';
+import { LoginFormValues } from '~/types/form';
 
 const schema = yup.object().shape({
   email: yup
