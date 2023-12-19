@@ -1,73 +1,79 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BlogApi } from '~/api/BlogApi';
 import { Blog as BlogInterface } from '~/types/entity';
 import Blog from '../Blog';
 import ModalImage from '../Modal';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import LoadingComponent from '../LoadingComponent';
 
 const ListBlog = () => {
   const [listBlog, setListBlog] = useState<BlogInterface[]>([]);
   const [page, setPage] = useState(1);
-  const [scrollY, setScrollY] = useState(0);
-
-  const fetchData = async (page: number) => {
-    try {
-      const blog = await BlogApi.getAllBlog({ page: 0, pageSize: 10 });
-      setListBlog(blog.data.data.datas);
-      console.log(blog.data.data.datas);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const [modalImage, setModalImage] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
 
   useEffect(() => {
-    fetchData(page);
+    const fetchData = async () => {
+      await BlogApi.getAllBlog({ page: 0, pageSize: 10 })
+        .then((response) => {
+          setListBlog(response.data.data.datas);
+        })
+        .catch((error) => {});
+    };
+    fetchData();
   }, []);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const position = window.scrollY;
-      setScrollY(position);
-
-      if (position > 4500 + (page - 1) * 7000) {
+  const loadMoreDate = async () => {
+    await BlogApi.getAllBlog({ page: page, pageSize: 10 })
+      .then((response) => {
+        setListBlog((state) => [...state, ...response.data.data.datas]);
         setPage((state) => state + 1);
-      }
-    };
+        if (listBlog.length >= response.data.data.totalItems) {
+          setHasMore(false);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [scrollY]);
-
-  useEffect(() => {
-    const fetchMoreData = async () => {
-      await BlogApi.getAllBlog({ page, pageSize: 10 })
-        .then((res) => {
-          setListBlog((state) => [...state, ...res.data.data.datas]);
-        })
-        .catch((err) => {});
-    };
-
-    if (page > 1) {
-      fetchMoreData();
-    }
-  }, [page]);
+  const setModal = (value: boolean) => {
+    setModalImage(value);
+  };
 
   return (
-    <div className="bg-gray-100 rounded-3xl">
-      {listBlog.map((blog: BlogInterface, index: number) => (
-        <Blog blog={blog} key={index} />
-      ))}
-      <div
-        id="defaultModal"
-        tabIndex={-1}
-        aria-hidden="true"
-        className="fixed top-0 left-0 right-0 z-50 hidden w-screen overflow-x-hidden overflow-y-auto md:inset-0 h-screen"
+    <div
+      id="list-blog"
+      className={`bg-gray-200 rounded-3xl list-blog ${
+        modalImage && ' overflow-hidden'
+      }`}
+    >
+      <InfiniteScroll
+        dataLength={listBlog.length}
+        next={loadMoreDate}
+        hasMore={hasMore}
+        loader={<LoadingComponent />}
+        endMessage={
+          <div className="rounded-lg bg-white p-5">
+            <p style={{ textAlign: 'center' }}>
+              Bạn đã xem hết tất cả bài viết vui lòng theo dõi những người dùng
+              khác để xem nhiều thông tin
+            </p>
+          </div>
+        }
       >
-        <ModalImage />
+        {listBlog.map((blog: BlogInterface, index: number) => (
+          <Blog blog={blog} key={index} setModalImage={setModal} />
+        ))}
+      </InfiniteScroll>
+
+      <div
+        className={`fixed top-0 left-0 right-0 z-50 ${
+          !modalImage && ' hidden '
+        } w-screen overflow-x-hidden overflow-y-auto md:inset-0 h-screen`}
+      >
+        <ModalImage setModalImage={setModalImage} />
       </div>
-      
     </div>
   );
 };

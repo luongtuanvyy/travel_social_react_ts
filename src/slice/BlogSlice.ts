@@ -2,19 +2,25 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { Blog } from '~/types/entity';
 
 export interface BlogState {
-  value: Blog | null;
+  blog: Blog | null;
+  image: string | null;
 }
 
 const initialState: BlogState = {
-  value: null,
+  blog: null,
+  image: null,
 };
 
 const BlogSlice = createSlice({
   name: 'blogs',
   initialState,
   reducers: {
-    modifyBlog: (state: BlogState, action: PayloadAction<Blog>) => {
-      return { ...state, value: action.payload };
+    modifyBlog: (state: BlogState, action: PayloadAction<BlogState>) => {
+      state.blog = action.payload.blog;
+      state.image = action.payload.image;
+    },
+    modifyImage: (state: BlogState, action: PayloadAction<string>) => {
+      state.image = action.payload;
     },
   },
 });

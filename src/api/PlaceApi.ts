@@ -8,6 +8,7 @@ export const PlaceApi = {
   getPlaces: async (params: {
     pageSize: number;
     page: number;
+    address?: string;
   }): Promise<AxiosResponse<ApiRespone<StateApiResponse<Place[]>>>> => {
     const paramsString = queryString.stringify(params);
     const apiParams = `/api/public/places?${paramsString}`;

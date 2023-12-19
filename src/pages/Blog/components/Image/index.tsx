@@ -1,17 +1,18 @@
 import { initModals } from 'flowbite';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 type ImageProps = {
-  image: string[];
-  setBlog: () => void;
+  image: string[] | undefined;
+  setBlog: (image: string) => void;
 };
 
 const ImageBlog = (props: ImageProps) => {
-  const { image, setBlog } = props;
+  const { setBlog } = props;
+  const [image, setimage] = useState<string[] | undefined>(props.image);
 
-  useEffect(() => {
-    initModals();
-  }, []);
+  if (!image) {
+    return <></>;
+  }
 
   const setGrid = (image: string[]): string => {
     if (image.length == 1) {
@@ -23,11 +24,12 @@ const ImageBlog = (props: ImageProps) => {
     }
   };
 
-  let imageShow: string[] = image.slice(0, image.length < 4 ? image.length : 3);
-  let imageHide: string[] = [];
-  if (image.length > 3) {
-    imageHide = image.slice(3);
-  }
+  const imageShow: string[] = image.slice(
+    0,
+    image.length < 4 ? image.length : 3,
+  );
+
+  const imageHide: string[] = image.length > 3 ? image.slice(3) : [];
 
   const getClass = (index: number) => {
     switch (index) {
@@ -42,36 +44,43 @@ const ImageBlog = (props: ImageProps) => {
     }
   };
 
+  const handleErrorImage = (index: number) => {
+    const imageTemp = [...image];
+    imageTemp.splice(index, 1);
+    setimage(imageTemp);
+  };
+
   return (
-    <div className={`grid ${setGrid(image)} gap-4 h-full`}>
+    <div
+      className={`grid ${setGrid(image)} ${
+        imageShow.length > 0 && ' gap-4'
+      } h-full`}
+    >
       {imageShow.map((imageItem, index) => (
         <div
           key={index}
           className={`${imageShow.length >= 3 && getClass(index)}`}
         >
           <button
-            data-modal-target="defaultModal"
-            data-modal-toggle="defaultModal"
             className="w-full h-full"
             type="button"
-            onClick={setBlog}
+            onClick={() => setBlog(imageItem)}
           >
             <img
               className={`object-cover rounded-xl w-full ${
                 imageShow.length >= 3 ? 'h-full' : 'h-96'
               }`}
-              src="https://loremflickr.com/640/480/nature"
+              src={`https://res.cloudinary.com/di2n480w0/image/upload/${imageItem}`}
+              onError={() => handleErrorImage(index)}
               alt=""
             />
           </button>
           {imageHide.length > 0 && index == 2 ? (
             <div className="absolute top-0 rounded-xl h-full w-full bg-gray-800/75 flex justify-center items-center">
               <button
-                data-modal-target="defaultModal"
-                data-modal-toggle="defaultModal"
                 className="w-full h-full"
                 type="button"
-                onClick={setBlog}
+                onClick={() => setBlog(imageHide[0])}
               >
                 <span className="text-2xl font-medium text-white">
                   +{imageHide.length}

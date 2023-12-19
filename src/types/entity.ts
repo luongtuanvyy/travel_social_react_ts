@@ -1,8 +1,8 @@
 export interface BaseEntity {
   id: number;
-  createdAt: string;
+  createdAt: number;
   createdBy: string;
-  modifiedAt: string;
+  modifiedAt: number;
   modifiedBy: string;
   isActivated: boolean;
 }
@@ -28,7 +28,11 @@ export interface Booking extends BaseEntity {
   member: BookingPerson[];
 }
 
-export interface BookingPerson extends BaseEntity {}
+export interface BookingPerson {
+  name: string;
+  age: number;
+  gender: boolean;
+}
 
 export interface Tour extends BaseEntity {
   name: string;
@@ -68,12 +72,15 @@ export interface Place extends BaseEntity {
 export interface Blog extends BaseEntity {
   name: string;
   avatar: string;
-  like: number;
-  share: number;
-  comment: number;
   image: string;
   description: string;
+  cloudinaryId: string;
   blogid?: string;
+  like: boolean;
+  totalLike: number;
+  totalComment: number;
+  totalShare: number;
+  verify: boolean;
 }
 
 export interface Comment extends BaseEntity {

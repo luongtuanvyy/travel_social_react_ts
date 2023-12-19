@@ -1,6 +1,5 @@
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { useState } from 'react';
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
 import { Tour } from '~/types/entity';
 import './index.css';
@@ -66,6 +65,7 @@ const MapLeaflet = (prop: MapLeafletProps) => {
             )}
           </Marker>
         </MapContainer>
+        <div>Vị trí của bạn</div>
       </div>
     </>
   );

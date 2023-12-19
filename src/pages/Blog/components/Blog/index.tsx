@@ -1,27 +1,27 @@
-import Heart from '~/assets/svg/Heart';
-import {
-  convertDate,
-  convertDateToFullString,
-  convertDateToString,
-} from '~/service/DateService';
-import { Blog as BlogType } from '~/types/entity';
-import ImageBlog from '../Image';
-import { BlogActions } from '../../../../slice/BlogSlice';
+import { memo, useEffect, useRef, useState } from 'react';
 import { useAppDispatch } from '~/app/hook';
-import { Feed, HeartBorder, More } from '~/assets/svg';
-import { memo, useRef, useEffect, useState } from 'react';
-import User from '~/assets/svg/User';
+import { More } from '~/assets/svg';
+import Heart from '~/assets/svg/Heart';
+import { convertDate, convertDateToFullString } from '~/service/DateService';
+import { cloudinaryToImage } from '~/service/ImageService';
+import { Blog as BlogType } from '~/types/entity';
+import { BlogActions } from '../../../../slice/BlogSlice';
+import ImageBlog from '../Image';
+import './index.css';
+import { ActionBlogApi } from '~/api/ActionApi';
 
 type BlogProps = {
   blog: BlogType;
+  setModalImage: (value: boolean) => void;
 };
 
 const Blog = (props: BlogProps) => {
-  const { blog } = props;
+  const { blog, setModalImage } = props;
   const dispatch = useAppDispatch();
   const [isMouseOver, setIsMouseOver] = useState(false);
   const [hoverShowProfile, setHoverShowProfile] = useState(false);
   const hoverProfile = useRef<NodeJS.Timeout>();
+
   useEffect(() => {
     if (isMouseOver) {
       hoverProfile.current = setTimeout(() => {
@@ -33,8 +33,20 @@ const Blog = (props: BlogProps) => {
     }
   }, [isMouseOver]);
 
-  const setBlog = () => {
-    dispatch(BlogActions.modifyBlog(blog));
+  const handleLike = async () => {
+    try {
+      await ActionBlogApi.like({ id: blog.id })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {});
+    } catch (error) {}
+  };
+
+  const setBlog = (image: string) => {
+    dispatch(BlogActions.modifyBlog({ blog, image }));
+    setModalImage(true);
+    console.log(image);
   };
 
   return (
@@ -100,68 +112,78 @@ const Blog = (props: BlogProps) => {
                 </div>
               </div>
             </div>
-            <p className="p-5 pt-0">{blog.description}</p>
+            <p className="px-5">{blog.description}</p>
           </div>
-          <div className="image p-5 py-0 ">
-            <div className="rounded-lg dark:border-gray-600 h-96 mb-2">
-              <ImageBlog image={['1', '2', '3', '4']} setBlog={setBlog} />
+          <div className={`image px-5 `}>
+            <div
+              className={`rounded-lg dark:border-gray-600 ${
+                cloudinaryToImage(blog.cloudinaryId).length > 0 && 'h-96 mb-4'
+              } mt-2 mb-2`}
+            >
+              <ImageBlog
+                image={cloudinaryToImage(blog.cloudinaryId)}
+                setBlog={setBlog}
+              />
             </div>
           </div>
         </div>
       </div>
       <div>
-        <div className="grid grid-cols-2 px-5 py-1 pb-3">
-          <div className="flex-none flex items-center">
-            <Heart />
-            <span className="ml-2 text-xs font-medium">
-              {blog.like} lượt thích
-            </span>
+        {blog.totalComment > 0 || blog.totalLike > 0 || blog.totalShare > 0 ? (
+          <div className="grid grid-cols-2 px-5 py-1 pb-3">
+            <div className="flex items-center">
+              {blog.totalLike > 0 && (
+                <>
+                  <Heart />
+                  <span className="ml-2 text-xs font-medium">
+                    {blog.totalLike} lượt thích
+                  </span>
+                </>
+              )}
+            </div>
+            <div className="flex items-center justify-end">
+              {blog.totalComment > 0 && (
+                <span className="mx-2 text-xs font-medium">
+                  {blog.totalComment} bình luận
+                </span>
+              )}
+              {blog.totalShare > 0 && (
+                <span className="ml-2 text-xs font-medium">
+                  {blog.totalShare} chia sẻ
+                </span>
+              )}
+            </div>
           </div>
-          <div className="flex-none flex items-center justify-end">
-            {/* <div className="text-secondary">
-              <svg
-                width="15"
-                height="15"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M20 1.999H4C2.897 1.999 2 2.896 2 3.999V21.999L6 17.999H20C21.103 17.999 22 17.102 22 15.999V3.999C22 2.896 21.103 1.999 20 1.999ZM14 12.999H7V10.999H14V12.999ZM17 8.999H7V6.999H17V8.999Z"
-                  fill="currentColor"
-                />
-              </svg>
-            </div> */}
-            <span className="mx-2 text-xs font-medium">
-              {blog.comment} bình luận
-            </span>
-            {/* <div className="text-primary">
-              <svg
-                width="15"
-                height="15"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M5.49961 15C6.37471 14.995 7.21639 14.6633 7.85961 14.07L14.1196 17.65C14.0399 17.9262 13.9995 18.2124 13.9996 18.5C13.9932 19.3115 14.2666 20.1005 14.7738 20.734C15.281 21.3676 15.991 21.807 16.7843 21.9783C17.5776 22.1497 18.4057 22.0424 19.1291 21.6747C19.8526 21.3069 20.4272 20.7011 20.7563 19.9592C21.0854 19.2174 21.1488 18.3848 20.9358 17.6017C20.7229 16.8185 20.2466 16.1327 19.5871 15.6596C18.9277 15.1866 18.1254 14.9552 17.3153 15.0044C16.5053 15.0536 15.7369 15.3805 15.1396 15.93L8.87961 12.35C8.95516 12.1035 8.99556 11.8477 8.99961 11.59L15.1496 8.06996C15.7437 8.6068 16.5043 8.92304 17.3038 8.96566C18.1034 9.00827 18.8933 8.77466 19.541 8.30401C20.1888 7.83335 20.655 7.15428 20.8615 6.38068C21.068 5.60707 21.0022 4.78599 20.6752 4.05514C20.3481 3.32428 19.7797 2.7281 19.0653 2.36659C18.3509 2.00507 17.5339 1.90021 16.7513 2.06958C15.9687 2.23896 15.2682 2.67227 14.7672 3.29685C14.2662 3.92143 13.9952 4.69928 13.9996 5.49996C14.003 5.78727 14.0433 6.07294 14.1196 6.34996L8.42961 9.59996C8.09992 9.08991 7.64319 8.67444 7.1043 8.39436C6.56541 8.11429 5.96292 7.97926 5.35604 8.00254C4.74916 8.02583 4.15879 8.20663 3.64295 8.52717C3.1271 8.84772 2.70355 9.29697 2.41391 9.83078C2.12427 10.3646 1.97851 10.9646 1.99097 11.5718C2.00343 12.179 2.17367 12.7725 2.48496 13.2939C2.79626 13.8154 3.23789 14.2469 3.76644 14.546C4.295 14.8452 4.89229 15.0016 5.49961 15ZM17.4996 17C17.7963 17 18.0863 17.0879 18.333 17.2528C18.5796 17.4176 18.7719 17.6518 18.8854 17.9259C18.999 18.2 19.0287 18.5016 18.9708 18.7926C18.9129 19.0836 18.7701 19.3508 18.5603 19.5606C18.3505 19.7704 18.0832 19.9133 17.7922 19.9711C17.5013 20.029 17.1997 19.9993 16.9256 19.8858C16.6515 19.7722 16.4172 19.58 16.2524 19.3333C16.0876 19.0866 15.9996 18.7966 15.9996 18.5C15.9996 18.1021 16.1576 17.7206 16.439 17.4393C16.7203 17.158 17.1018 17 17.4996 17ZM17.4996 3.99996C17.7963 3.99996 18.0863 4.08793 18.333 4.25275C18.5796 4.41758 18.7719 4.65184 18.8854 4.92593C18.999 5.20002 19.0287 5.50162 18.9708 5.79259C18.9129 6.08357 18.7701 6.35084 18.5603 6.56062C18.3505 6.7704 18.0832 6.91326 17.7922 6.97114C17.5013 7.02901 17.1997 6.99931 16.9256 6.88578C16.6515 6.77225 16.4172 6.57999 16.2524 6.33331C16.0876 6.08664 15.9996 5.79663 15.9996 5.49996C15.9996 5.10213 16.1576 4.7206 16.439 4.4393C16.7203 4.15799 17.1018 3.99996 17.4996 3.99996ZM5.49961 9.99996C5.79629 9.99996 6.0863 10.0879 6.33297 10.2528C6.57964 10.4176 6.7719 10.6518 6.88543 10.9259C6.99897 11.2 7.02867 11.5016 6.97079 11.7926C6.91291 12.0836 6.77005 12.3508 6.56027 12.5606C6.3505 12.7704 6.08322 12.9133 5.79225 12.9711C5.50128 13.029 5.19968 12.9993 4.92559 12.8858C4.6515 12.7722 4.41723 12.58 4.25241 12.3333C4.08759 12.0866 3.99961 11.7966 3.99961 11.5C3.99961 11.1021 4.15765 10.7206 4.43895 10.4393C4.72026 10.158 5.10179 9.99996 5.49961 9.99996Z"
-                  fill="currentColor"
-                />
-              </svg>
-            </div> */}
-            <span className="ml-2 text-xs font-medium">
-              {blog.share} chia sẻ
-            </span>
-          </div>
-        </div>
+        ) : (
+          <></>
+        )}
         <div className="mx-5 reaction grid grid-cols-3 justify-center border-t-2 border-b-2 border-gray-100">
-          <button
-            type="button"
+          <label
+            onClick={handleLike}
             className="px-6 py-3 flex text-sm font-medium text-gray-900 bg-white rounded-l-lg focus:z-10 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white"
           >
-            <HeartBorder />
+            <div className="ui-like">
+              <input type="checkbox" defaultChecked={blog.like} />
+              <div className="like">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill=""
+                >
+                  <g strokeWidth="0" id="SVGRepo_bgCarrier" />
+                  <g
+                    strokeLinejoin="round"
+                    strokeLinecap="round"
+                    id="SVGRepo_tracerCarrier"
+                  />
+                  <g id="SVGRepo_iconCarrier">
+                    <path d="M20.808,11.079C19.829,16.132,12,20.5,12,20.5s-7.829-4.368-8.808-9.421C2.227,6.1,5.066,3.5,8,3.5a4.444,4.444,0,0,1,4,2,4.444,4.444,0,0,1,4-2C18.934,3.5,21.773,6.1,20.808,11.079Z" />
+                  </g>
+                </svg>
+              </div>
+            </div>
             <span className="pl-2">Thích</span>
-          </button>
+          </label>
           <button
             type="button"
             className="px-4 py-3 flex justify-center text-sm font-medium text-gray-900 bg-white focus:z-10 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white"
@@ -218,6 +240,7 @@ const Blog = (props: BlogProps) => {
             <span className="pl-2">Chia sẻ</span>
           </button>
         </div>
+
         <div className="flex flex-row pb-2 items-center rounded-3xl bg-white dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
           <div className="image justify-self-center pl-5 min-w-max">
             <img

@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { ApiRespone, StateApiResponse } from '~/types/api';
+import { ApiRespone, Comment, StateApiResponse } from '~/types/api';
 import { axiosClientTravel } from './ApiClient';
 import { Tour } from '~/types/entity';
 import queryString from 'query-string';
@@ -38,5 +38,12 @@ export const TourApi = {
     const urlparams = `/api/public/tours?${queryString.stringify(params)}`;
     const result = await axiosClientTravel.get(urlparams);
     return result;
+  },
+  getComment: async (
+    id: number,
+  ): Promise<AxiosResponse<ApiRespone<StateApiResponse<Comment[]>>>> => {
+    return await axiosClientTravel.get(
+      `/api/public/reviews/findByTourId?id=${id}`,
+    );
   },
 };

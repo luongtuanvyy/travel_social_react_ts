@@ -10,22 +10,15 @@ import Navbar from '~/components/Navbar';
 import PlaceComponent from '~/components/Place';
 import SlideTour from '~/components/SlideTour';
 import Footer from '~/components/User/Footer';
+import { DATA_GRID_TEMPLATE } from '~/data/Data';
 import { Place, Tour } from '~/types/entity';
-
-const DATA_GRID_TEMPLATE = [
-  'row-span-2 col-span-2 ',
-  'row-span-2 col-span-2 ',
-  'row-span-4 col-span-2 ',
-  'row-span-2 col-span-3 ',
-  'row-span-2 ',
-  'row-span-2 col-span-2 ',
-];
+import { TabTitle } from '~/utils/TabTilte';
 
 const Home = () => {
-  // const [active, setActive] = useState(1);
+  TabTitle('Trang chủ');
+
   const [tourHot, setTourHot] = useState<Tour[]>([]);
   const [placeHot, setPlaceHot] = useState<Place[]>([]);
-  // const slideScroll = useRef();
 
   useEffect(() => {
     const fetchData = async () => {

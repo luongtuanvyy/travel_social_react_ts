@@ -15,6 +15,7 @@ import { AuthenticationApi } from '~/api/AuthenticationApi';
 import { useAppDispatch } from '~/app/hook';
 import { authAction } from '~/slice/AuthSlice';
 import { Eye, EyeHide } from '~/assets/svg';
+import toast from 'react-hot-toast';
 
 const schema = yup.object().shape({
   email: yup
@@ -42,7 +43,9 @@ const FormLogin = () => {
   const [error, setErrorForm] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
-  const onSubmit: SubmitHandler<LoginFormValues> = (data: LoginFormValues) => {
+  const onSubmit: SubmitHandler<LoginFormValues> = async (
+    data: LoginFormValues,
+  ) => {
     const { email, password, remember } = data;
 
     const login = async () => {
@@ -54,6 +57,7 @@ const FormLogin = () => {
                 token: response.data.data.accessToken,
                 user: response.data.data.accountDto,
                 with: 'email',
+                remember,
               }),
             );
             localStorage.setItem('token', response.data.data.accessToken);
@@ -61,7 +65,9 @@ const FormLogin = () => {
               'user',
               JSON.stringify(response.data.data.accountDto),
             );
+            toast.success('Đăng nhập thành công');
             navigate('/home');
+
           } else {
             setError('email', {
               type: 'server',
@@ -112,6 +118,7 @@ const FormLogin = () => {
               token: response.data.data.accessToken,
               user: response.data.data.accountDto,
               with: type,
+              remember: true,
             }),
           );
           navigate('/home');
@@ -132,7 +139,8 @@ const FormLogin = () => {
                 Đăng nhập
               </h1>
               <p className="text-center text-sm">
-                Đăng nhập vào để nhận được thông báo và nhiều tiện ích từ ứng dụng của chúng tôi
+                Đăng nhập vào để nhận được thông báo và nhiều tiện ích từ ứng
+                dụng của chúng tôi
               </p>
               <form
                 className="space-y-4 md:space-y-4"
@@ -225,16 +233,16 @@ const FormLogin = () => {
                         htmlFor="remember"
                         className="text-gray-500 dark:text-gray-300"
                       >
-                        Ghi nhớ mật khẩu ?
+                        Ghi nhớ đăng nhập ?
                       </label>
                     </div>
                   </div>
-                  <a
-                    href="#"
+                  <Link
+                    to={"/forgotten"}
                     className="text-sm font-medium text-primary-600 dark:text-primary-500"
                   >
                     Quên mật khẩu?
-                  </a>
+                  </Link>
                 </div>
                 <button
                   type="submit"

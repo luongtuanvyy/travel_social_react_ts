@@ -2,8 +2,7 @@ import { initDropdowns } from 'flowbite';
 import { useAppSelector } from '~/app/hook';
 import SelectLocation from '~/components/SelectLocation';
 
-
-const FilterPlace = () => {
+const FilterPlace = (props: { handleAddress: (address: string) => void }) => {
   initDropdowns;
   const places = useAppSelector((state) => state.places);
 
@@ -42,7 +41,7 @@ const FilterPlace = () => {
                   />
                 </div>
               </form>
-              <SelectLocation />
+              <SelectLocation handleAddress={props.handleAddress} />
             </div>
             <div className="flex flex-col items-center justify-end flex-shrink-0 w-full space-y-2 md:w-auto md:flex-row md:space-y-0 md:items-center md:space-x-3">
               <p className="font-medium text-sm">

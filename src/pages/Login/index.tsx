@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom';
 import FormLogin from './components';
+import { TabTitle } from '~/utils/TabTilte';
 
 const Login = () => {
+  TabTitle('Đăng nhập');
   return (
     <div className="grid xl:grid-cols-2 h-screen gap-4 relative">
       <div className="absolute top-5 left-5">
