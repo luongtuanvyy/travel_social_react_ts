@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 const useGeoLocation = () => {
-  const [location, setLocation] = React.useState({
+  const [, setLocation] = React.useState({
     loaded: false,
     coordinates: { lat: '', lng: '' },
   });

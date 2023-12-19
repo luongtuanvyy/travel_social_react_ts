@@ -1,5 +1,5 @@
 import { Datepicker } from 'flowbite-react';
-import { useRef, useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { PlaceApi } from '~/api/PlaceApi';
 import { TourApi } from '~/api/TourApi';
