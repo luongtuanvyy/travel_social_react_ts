@@ -28,7 +28,7 @@ const ListBlog = () => {
       .then((response) => {
         setListBlog((state) => [...state, ...response.data.data.datas]);
         setPage((state) => state + 1);
-        if (listBlog.length >= response.data.data.totalItems) {
+        if (response.data.data.totalPage - 1 === page) {
           setHasMore(false);
         }
       })

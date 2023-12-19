@@ -56,6 +56,7 @@ const Tours = () => {
           pageCount={state?.totalPage}
         />
       )}
+      {loading && <div className="loader"></div>}
     </React.Fragment>
   );
 };

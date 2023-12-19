@@ -11,16 +11,16 @@ import Register from '../../pages/Register';
 import { RegisterAcitons } from '~/slice/RegisterSlice';
 
 type Inputs = {
-  name: string;
-  gmail: string;
-  password: string;
-  agree: boolean;
+  name?: string;
+  gmail?: string;
+  password?: string;
+  agree?: boolean;
 };
 
-const FormRegister: React.FC = () => {
+const FormRegister = (props: { handleLoading: (value: boolean) => void }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const { handleLoading } = props;
   const schema = yup
     .object({
       name: yup
@@ -63,6 +63,7 @@ const FormRegister: React.FC = () => {
     const { name, gmail, password } = data;
 
     const sendOTP = async () => {
+      handleLoading(true);
       await AuthenticationApi.sendOTP({ gmail, status: 'Register' }).then(
         (response) => {
           if (response.data.success) {
@@ -70,7 +71,12 @@ const FormRegister: React.FC = () => {
               RegisterAcitons.setRegister({ name, email: gmail, password }),
             );
             toast.success('Gửi mã OTP thành công');
+            handleLoading(false);
             navigate('/otp');
+          } else if (response.data.message === 'Account exists') {
+            handleLoading(false);
+            toast.error('Tài khoản đã tồn tại');
+            setError('gmail', { message: 'Tài khoản đã tồn tại' });
           }
         },
       );

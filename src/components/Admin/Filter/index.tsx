@@ -16,9 +16,9 @@ const FilterAdmin = () => {
   const [onFilterMap, setOnFilterMap] = React.useState(false);
 
   const {
-    register,
-    handleSubmit,
-    formState: { errors },
+    // register,
+    // handleSubmit,
+    // formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
   });

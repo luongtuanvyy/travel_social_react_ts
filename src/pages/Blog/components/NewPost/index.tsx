@@ -1,4 +1,3 @@
-import React from 'react';
 import { useAppSelector } from '~/app/hook';
 
 const NewPost = (props: { handleNewPost: (value: boolean) => void }) => {

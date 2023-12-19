@@ -1,7 +1,8 @@
 import { initFlowbite } from 'flowbite';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
+// import { useDispatch } from 'react-redux';
+import { Route, Routes, useLocation} from 'react-router-dom';
 import About from './pages/About';
 import DashboardAdmin from './pages/Admin/Dashboard';
 import TourAdmin from './pages/Admin/Tour';
@@ -12,6 +13,8 @@ import ListBlog from './pages/Blog/components/ListBlog';
 import TourCompany from './pages/Company/TourCompany';
 import LayoutCompany from './pages/Company/layout';
 import Login from './pages/Login';
+import OTPFeature from './pages/OTP';
+import Photo from './pages/Photo';
 import ProfileFeature from './pages/Profile';
 import Profile from './pages/Profile/pages';
 import Follower from './pages/Profile/pages/Followers';
@@ -19,6 +22,7 @@ import History from './pages/Profile/pages/History';
 import Images from './pages/Profile/pages/Images';
 import Posts from './pages/Profile/pages/Post';
 import RegisterFeature from './pages/Register';
+import { RememberFeature } from './pages/Remember';
 import Setting from './pages/Setting';
 import LayoutBooking from './pages/User/Book/layout';
 import Information from './pages/User/Book/page/Information';
@@ -28,35 +32,30 @@ import PlacePage from './pages/User/Page';
 import Payment from './pages/User/Payment';
 import TourDetail from './pages/User/TourDetail';
 import Tours from './pages/User/Tours';
-import { authAction } from './slice/AuthSlice';
-import Photo from './pages/Photo';
-import { Toaster } from 'react-hot-toast';
-import { RememberFeature } from './pages/Remember';
-import OTPFeature from './pages/OTP';
 
-const DATA_PATHNAME = [
-  '/login',
-  '/registers',
-  '/home',
-  '/tours',
-  '/photo',
-  '/places',
-  '/newfeed',
-  '/about',
-];
+// const DATA_PATHNAME = [
+//   '/login',
+//   '/registers',
+//   '/home',
+//   '/tours',
+//   '/photo',
+//   '/places',
+//   '/newfeed',
+//   '/about',
+// ];
 
 const App = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+  // const navigate = useNavigate();
+  // const dispatch = useDispatch();
 
-  const IntercepterPathname = (pathname: string) => {
-    DATA_PATHNAME.forEach((item) => {
-      if (pathname === item) {
-        return false;
-      }
-    });
-    return true;
-  };
+  // const IntercepterPathname = (pathname: string) => {
+  //   DATA_PATHNAME.forEach((item) => {
+  //     if (pathname === item) {
+  //       return false;
+  //     }
+  //   });
+  //   return true;
+  // };
 
   function usePageViews() {
     let location = useLocation();

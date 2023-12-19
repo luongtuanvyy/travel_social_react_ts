@@ -1,5 +1,3 @@
-import React from 'react';
-
 const Setting = () => {
   return (
     <div className="grid grid-cols-1 gap-1 pt-4">
@@ -143,7 +141,7 @@ const Setting = () => {
       </a>
       <a
         href="#"
-        className="block p-4 flex flex-col justify-center items-center text-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 group"
+        className="p-4 flex flex-col justify-center items-center text-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 group"
       >
         <svg
           width="24"
@@ -199,7 +197,7 @@ const Setting = () => {
       </a>
       <a
         href="#"
-        className="block p-4 flex flex-col justify-center items-center text-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 group"
+        className="p-4 flex flex-col justify-center items-center text-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 group"
       >
         <svg
           width="24"

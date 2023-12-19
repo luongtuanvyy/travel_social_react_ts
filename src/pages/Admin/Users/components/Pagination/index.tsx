@@ -1,4 +1,3 @@
-
 type PropsPagination = {
   pageCount: number | undefined;
   total: number | undefined;
@@ -7,7 +6,7 @@ type PropsPagination = {
 };
 
 const Pagination = (props: PropsPagination) => {
-  const { pageCount, total, handlePage, currentPage } = props;
+  const { pageCount, handlePage, currentPage } = props;
 
   const handlePagination = (currentPage: number) => {
     if (currentPage < 1) currentPage = 1;

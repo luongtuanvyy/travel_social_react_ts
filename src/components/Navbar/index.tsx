@@ -1,12 +1,12 @@
 import { signOut } from 'firebase/auth';
-import { initFlowbite } from 'flowbite';
-import { useEffect, useLayoutEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '~/app/hook';
 import { RootState } from '~/app/store';
 import { Notification, Setting } from '~/assets/svg';
 import { auth } from '~/firebase/config';
+import ListNotification from '~/pages/Blog/components/ListNotification';
 import { authAction, selectLoginWith, selectUser } from '~/slice/AuthSlice';
 
 const DATA_FEATURE_NAVBAR = [
@@ -21,7 +21,8 @@ const DATA_FEATURE_NAVBAR = [
 const Navbar = () => {
   const location = useLocation();
   const [showNavbar, setShowNavbar] = useState(false);
-  const [scrollY, setScrollY] = useState(0);
+  const [, setScrollY] = useState(0);
+  const [notification, setNotification] = useState(false);
   const navigate = useNavigate();
   const user = useAppSelector((state: RootState) => selectUser(state));
   const dispatch = useAppDispatch();
@@ -29,6 +30,7 @@ const Navbar = () => {
   const loginWith = useAppSelector((state: RootState) =>
     selectLoginWith(state),
   );
+
   const handleLogOut = () => {
     if (loginWith === 'google' || loginWith === 'facebook') {
       signOut(auth).then(() => {});
@@ -174,7 +176,7 @@ const Navbar = () => {
         <div
           className={`${
             showNavbar ? 'flex' : 'hidden'
-          } xl:flex flex-reverse xl:bg-transparent py-4 xl:py-0 order-2 xl:order-3 bg-gray-500 col-span-2 xl:col-span-1 items-center xl:justify-end pr-8`}
+          } xl:flex relative flex-reverse xl:bg-transparent py-4 xl:py-0 order-2 xl:order-3 bg-gray-500 col-span-2 xl:col-span-1 items-center xl:justify-end pr-8`}
         >
           {user && Object.keys(user).length !== 0 ? (
             <>
@@ -184,7 +186,6 @@ const Navbar = () => {
                   bgTransparent() ? 'bg-gray-50 text-gray-700' : 'text-white'
                 } text-gray-500 rounded-full hover:text-gray-900 hover:bg-gray-200 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600`}
               >
-                <span className="sr-only">View notifications</span>
                 <Setting />
               </button>
 
@@ -199,6 +200,7 @@ const Navbar = () => {
 
               <button
                 type="button"
+                onClick={() => setNotification(!notification)}
                 className={`p-2 hidden xl:block  ${
                   bgTransparent() ? 'bg-gray-50 text-gray-700' : 'text-white'
                 } text-gray-500 rounded-full hover:text-gray-900 hover:bg-gray-200 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600`}
@@ -206,13 +208,17 @@ const Navbar = () => {
                 <span className="sr-only">View notifications</span>
                 <Notification />
               </button>
+
               <div
-                className="hidden overflow-hidden z-50 my-4 max-w-sm text-base list-none bg-white divide-y divide-gray-100 shadow-lg dark:divide-gray-600 dark:bg-gray-700 rounded-xl"
+                className={`${
+                  notification ? '' : 'hidden'
+                } absolute top-10 w-96 translate-x-1/3 right-44 overflow-hidden z-50 my-4 max-w-sm text-base list-none bg-white divide-y divide-gray-100 shadow-lg dark:divide-gray-600 dark:bg-gray-700 rounded-xl`}
                 id="notification-dropdown"
               >
                 <div className="block py-2 px-4 text-base font-medium text-center text-gray-700 bg-gray-50 dark:bg-gray-600 dark:text-gray-300">
                   Thông báo
                 </div>
+                <ListNotification />
               </div>
 
               <button

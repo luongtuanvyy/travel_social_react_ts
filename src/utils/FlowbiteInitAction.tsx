@@ -1,5 +1,5 @@
 import { initFlowbite } from 'flowbite';
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 
 interface InitFlowbiteProviderProps {
   children: ReactNode;

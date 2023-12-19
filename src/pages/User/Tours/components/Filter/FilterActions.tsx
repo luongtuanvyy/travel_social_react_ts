@@ -1,7 +1,6 @@
 import { Datepicker } from 'flowbite-react';
 import React from 'react';
 import Range from '~/components/Range';
-import SelectLocation from '~/components/SelectLocation';
 
 const DATA_RADIO_FILTER = [
   {
@@ -64,7 +63,7 @@ const FilterActions = () => {
       <hr className="" />
       <div className="flex items-center space-x-2">
         <p className="text-sm font-medium whitespace-nowrap">Địa điểm :</p>
-        <SelectLocation />
+        {/* <SelectLocation handleAddress={} /> */}
       </div>
       <div>
         <h3 className="mb-3 text-sm font-medium text-gray-900 dark:text-white">

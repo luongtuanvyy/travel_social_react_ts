@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { axiosClientTravel } from '~/api/ApiClient';
 import { TourApi } from '~/api/TourApi';
 import { useAppSelector } from '~/app/hook';
 import { More, Tick } from '~/assets/svg';
@@ -130,7 +129,7 @@ const TourAdmin = () => {
                   <p className="font-medium">{tour.name}</p>
                   <p className="text-xs">{tour.departure}</p>
                   <p className="text-xs">
-                    {calculateDaysAndNights(tour.startDate, tour.startEnd)}{' '}
+                    {calculateDaysAndNights(tour.startDate, tour.endDate)}{' '}
                     &bull; {tour.vehicle}
                   </p>
                 </div>

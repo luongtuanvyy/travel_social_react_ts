@@ -1,8 +1,5 @@
-import React from 'react';
-import { Dashboard } from '~/assets/svg';
-import NavbarAdmin from './components/NavbarAdmin';
-import Aside from '~/features/Blog/components/Aside';
 import AsideAdmin from './components/Aside';
+import NavbarAdmin from './components/NavbarAdmin';
 
 
 const DashboardAdmin = () => {

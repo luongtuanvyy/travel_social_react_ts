@@ -5,21 +5,19 @@ import queryString from 'query-string';
 
 export const FollowerApi = {
   getFollowersById: async (props: {
-    id: string;
     page: number;
     pageSize: number;
   }): Promise<AxiosResponse<ApiRespone<StateApiResponse<Follower[]>>>> => {
-    const urlParams = `/api/public/follows/getFollowByAccount?${queryString.stringify(
+    const urlParams = `/api/user/follows/list-follow-you?${queryString.stringify(
       props,
     )}`;
     return await axiosClientTravel.get(urlParams);
   },
   getTopFollowers: async (props: {
-    email: string;
     page: number;
     pageSize: number;
   }): Promise<AxiosResponse<ApiRespone<StateApiResponse<Follower[]>>>> => {
-    const urlParams = `/api/public/follows/getTopFollower?${queryString.stringify(
+    const urlParams = `/api/user/follows/get-top?${queryString.stringify(
       props,
     )}`;
     return await axiosClientTravel.get(urlParams);

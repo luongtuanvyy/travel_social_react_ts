@@ -1,9 +1,8 @@
-import { initModals } from 'flowbite';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 type ImageProps = {
   image: string[] | undefined;
-  setBlog: (image: string) => void;
+  setBlog?: (image: string) => void;
 };
 
 const ImageBlog = (props: ImageProps) => {

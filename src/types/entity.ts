@@ -40,8 +40,8 @@ export interface Tour extends BaseEntity {
   children: number;
   baby: number;
   description: string;
-  startDate: string;
-  endDate: string;
+  startDate: number;
+  endDate: number;
   startDateBooking: string;
   endDateBooking: string;
   size: number;

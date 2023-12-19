@@ -1,6 +1,5 @@
-import React from 'react';
-import Comment from '../Comment';
 import { Comment as TypeComment } from '~/types/entity';
+import Comment from '../Comment';
 
 type CommentProps = {
   comments: TypeComment[];

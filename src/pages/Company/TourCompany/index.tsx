@@ -1,7 +1,6 @@
 import { Datepicker } from 'flowbite-react';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { axiosClientTravel } from '~/api/ApiClient';
 import { TourApi } from '~/api/TourApi';
 import { useAppSelector } from '~/app/hook';
 import { ArrowLeft, More, Tick } from '~/assets/svg';
@@ -62,7 +61,9 @@ const TourCompany = () => {
     };
     fetchData();
   }, []);
-  const handlePage = async (page: number) => {};
+  const handlePage = async (page: number) => {
+    console.log(page);
+  };
 
   useEffect(() => {
     if (editTour) {
@@ -186,7 +187,7 @@ const TourCompany = () => {
                       <p className="font-medium">{tour.name}</p>
                       <p className="text-xs">{tour.departure}</p>
                       <p className="text-xs">
-                        {calculateDaysAndNights(tour.startDate, tour.startEnd)}{' '}
+                        {calculateDaysAndNights(tour.startDate, tour.endDate)}{' '}
                         &bull; {tour.vehicle}
                       </p>
                     </div>

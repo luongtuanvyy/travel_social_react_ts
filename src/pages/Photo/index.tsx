@@ -1,6 +1,4 @@
-import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { BlogApi } from '~/api/BlogApi';
 import { useAppSelector } from '~/app/hook';
 import Heart from '~/assets/svg/Heart';
 import { convertDate } from '~/service/DateService';
@@ -10,14 +8,14 @@ const Photo = () => {
   const blog = useAppSelector((state) => state.blog.blog);
   const image = useAppSelector((state) => state.blog.image);
   const user = useAppSelector((state) => state.auth.user);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams,] = useSearchParams();
   console.log(searchParams.get('blogid'));
 
-  useEffect(() => {
-    const fetchBlog = async () => {
-      await BlogApi.getAllBlog({ page: 0, pageSize: 1 });
-    };
-  }, []);
+  // useEffect(() => {
+  //   const fetchBlog = async () => {
+  //     await BlogApi.getAllBlog({ page: 0, pageSize: 1 });
+  //   };
+  // }, []);
   // const handleImageIndex = (action: string | number) => {
   //   if (!(blog && image)) {
   //     return;
