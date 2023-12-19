@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
@@ -7,7 +7,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 import { AuthenticationApi } from '~/api/AuthenticationApi';
 import { Eye, EyeHide } from '~/assets/svg';
-import Register from '../../pages/Register';
 import { RegisterAcitons } from '~/slice/RegisterSlice';
 
 type Inputs = {

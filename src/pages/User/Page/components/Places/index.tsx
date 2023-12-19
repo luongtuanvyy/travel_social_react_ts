@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react';
 import { useAppSelector } from '~/app/hook';
 import Loading from '~/components/Loading';
 import PlaceComponent from '~/components/Place';

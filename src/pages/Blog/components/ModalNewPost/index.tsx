@@ -1,9 +1,8 @@
+import { ChangeEvent, useState } from 'react';
 import { useAppSelector } from '~/app/hook';
 import { Close, Image } from '~/assets/svg';
-import Location from '~/assets/svg/Location';
 import { cloudinaryToImage } from '~/service/ImageService';
 import ImageBlog from '../Image';
-import { ChangeEvent, useState } from 'react';
 
 type ModalNewPostProps = {
   handleNewPost: (value: boolean) => void;
@@ -11,7 +10,7 @@ type ModalNewPostProps = {
 
 const ModalNewPost = (props: ModalNewPostProps) => {
   const user = useAppSelector((state) => state.auth.user);
-  const [image, setImage] = useState<string>();
+  const [image,] = useState<string>();
   const { handleNewPost } = props;
   const handleImage = (e: ChangeEvent<HTMLInputElement>) => {
     // setImage();
