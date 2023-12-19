@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { TabTitle } from '~/utils/TabTilte';
 import FormOTP from './components/FormOTP';

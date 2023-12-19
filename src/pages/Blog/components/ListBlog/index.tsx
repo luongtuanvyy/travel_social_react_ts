@@ -18,7 +18,9 @@ const ListBlog = () => {
         .then((response) => {
           setListBlog(response.data.data.datas);
         })
-        .catch((error) => {});
+        .catch((error) => {
+          console.log(error);
+        });
     };
     fetchData();
   }, []);

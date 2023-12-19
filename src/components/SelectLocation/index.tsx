@@ -15,7 +15,9 @@ const SelectLocation = (props: {
         .then((response) => {
           setLocation(response);
         })
-        .catch((err) => {});
+        .catch((err) => {
+          console.log(err);
+        });
     };
     fecthLocation();
   }, []);

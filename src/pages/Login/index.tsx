@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import FormLogin from './components';
 import { TabTitle } from '~/utils/TabTilte';
+import FormLogin from './components';
 
 const Login = () => {
   TabTitle('Đăng nhập');

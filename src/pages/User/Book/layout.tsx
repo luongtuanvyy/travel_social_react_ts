@@ -4,11 +4,11 @@ import { TourApi } from '~/api/TourApi';
 import { useAppDispatch, useAppSelector } from '~/app/hook';
 import { UserIcon } from '~/assets/svg';
 import Navbar from '~/components/Navbar';
+import { CurrencyVND } from '~/service/CurrentService';
 import { convertDateToString } from '~/service/DateService';
 import { TourBookActions } from '~/slice/TourBook';
 import { Tour } from '~/types/entity';
 import Indicator from './components/Indicators';
-import { CurrencyVND } from '~/service/CurrentService';
 
 const LayoutBooking = () => {
   const pathname = useLocation().pathname;

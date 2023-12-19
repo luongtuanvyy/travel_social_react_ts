@@ -1,7 +1,5 @@
-import React from 'react';
-import Navbar from '~/components/Navbar';
-import TourCompany from './TourCompany';
 import { Outlet } from 'react-router-dom';
+import Navbar from '~/components/Navbar';
 
 const LayoutCompany = () => {
   return (

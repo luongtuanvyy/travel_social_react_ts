@@ -5,11 +5,10 @@ import { useAppSelector } from '~/app/hook';
 import { RootState } from '~/app/store';
 import { Close } from '~/assets/svg';
 import FilterAdmin from '~/components/Admin/Filter';
-import NavbarAdmin from '~/components/Admin/Navbar';
+import Pagination from '~/components/Pagination';
+import { StateApiResponse } from '~/types/api';
 import { User } from '~/types/entity';
 import Table, { modalReturn } from './components/Table';
-import { StateApiResponse } from '~/types/api';
-import Pagination from '~/components/Pagination';
 
 export type PropsTable = {
   onShowModal: (value: boolean, user?: modalReturn) => void;

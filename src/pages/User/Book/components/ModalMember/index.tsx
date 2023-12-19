@@ -21,7 +21,7 @@ const ModalMember = (props: ModalMemberProps) => {
     register,
     handleSubmit,
     reset,
-    formState: { errors },
+    // formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
   });

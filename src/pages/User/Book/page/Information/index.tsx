@@ -1,19 +1,19 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import React, { useEffect } from 'react';
-import { SubmitHandler, set, useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import * as yup from 'yup';
 import { TourApi } from '~/api/TourApi';
 import { useAppDispatch, useAppSelector } from '~/app/hook';
-import { Edit, Plane, UserIcon } from '~/assets/svg';
+import { Plane, UserIcon } from '~/assets/svg';
 import StarArray from '~/components/Star';
 import { convertDateToString, getAge } from '~/service/DateService';
+import { BookingActions } from '~/slice/BookingSlice';
 import { Tour } from '~/types/entity';
 import { BookingPerson } from '~/types/form';
-import Price from '../../components/Price';
 import Member from '../../components/Member';
-import { BookingActions } from '~/slice/BookingSlice';
 import ModalMember from '../../components/ModalMember';
+import Price from '../../components/Price';
 
 const schema = yup
   .object({

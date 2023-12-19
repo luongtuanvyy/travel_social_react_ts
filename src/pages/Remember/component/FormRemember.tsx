@@ -16,9 +16,9 @@ const FormRemember = () => {
   const {
     register,
     handleSubmit,
-    setError,
-    setValue,
-    setFocus,
+    // setError,
+    // setValue,
+    // setFocus,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
