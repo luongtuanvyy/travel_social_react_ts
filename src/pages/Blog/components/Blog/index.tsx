@@ -1,4 +1,4 @@
-import { memo, useEffect, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { useAppDispatch } from '~/app/hook';
 import { More } from '~/assets/svg';
 import Heart from '~/assets/svg/Heart';
@@ -19,8 +19,10 @@ const Blog = (props: BlogProps) => {
   const { blog, setModalImage } = props;
   const dispatch = useAppDispatch();
   const [isMouseOver, setIsMouseOver] = useState(false);
+  const [isLiked, setIsLiked] = useState(blog.like);
   const [hoverShowProfile, setHoverShowProfile] = useState(false);
   const hoverProfile = useRef<NodeJS.Timeout>();
+  const [likeCount, setLikeCount] = useState(blog.totalLike);
 
   useEffect(() => {
     if (isMouseOver) {
@@ -33,15 +35,24 @@ const Blog = (props: BlogProps) => {
     }
   }, [isMouseOver]);
 
-  const handleLike = async () => {
+  const likeActions = useCallback(async () => {
     try {
       await ActionBlogApi.like({ id: blog.id })
         .then((response) => {
-          console.log(response);
+          if (response.data.success) {
+            setIsLiked((prev) => {
+              setLikeCount((prev) => (prev ? prev - 1 : prev + 1));
+              return !prev;
+            });
+          }
         })
-        .catch((error) => {});
-    } catch (error) {}
-  };
+        .catch((error) => {
+          console.log(error);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  }, [blog.id]);
 
   const setBlog = (image: string) => {
     dispatch(BlogActions.modifyBlog({ blog, image }));
@@ -129,14 +140,14 @@ const Blog = (props: BlogProps) => {
         </div>
       </div>
       <div>
-        {blog.totalComment > 0 || blog.totalLike > 0 || blog.totalShare > 0 ? (
+        {blog.totalComment > 0 || likeCount > 0 || blog.totalShare > 0 ? (
           <div className="grid grid-cols-2 px-5 py-1 pb-3">
             <div className="flex items-center">
-              {blog.totalLike > 0 && (
+              {likeCount > 0 && (
                 <>
                   <Heart />
                   <span className="ml-2 text-xs font-medium">
-                    {blog.totalLike} lượt thích
+                    {likeCount} lượt thích
                   </span>
                 </>
               )}
@@ -158,12 +169,9 @@ const Blog = (props: BlogProps) => {
           <></>
         )}
         <div className="mx-5 reaction grid grid-cols-3 justify-center border-t-2 border-b-2 border-gray-100">
-          <label
-            onClick={handleLike}
-            className="px-6 py-3 flex text-sm font-medium text-gray-900 bg-white rounded-l-lg focus:z-10 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white"
-          >
+          <label className="px-6 py-3 flex text-sm font-medium text-gray-900 bg-white rounded-l-lg focus:z-10 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
             <div className="ui-like">
-              <input type="checkbox" defaultChecked={blog.like} />
+              <input type="checkbox" checked={isLiked} onChange={likeActions} />
               <div className="like">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

@@ -1,23 +1,28 @@
-import { ChangeEvent, KeyboardEvent, useRef, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
-import * as yup from 'yup';
 import { AuthenticationApi } from '~/api/AuthenticationApi';
 import { useAppSelector } from '~/app/hook';
 
-const schema = yup.object().shape({
-  email: yup
-    .string()
-    .required('Email không được để trống')
-    .email('Email không hợp lệ')
-    .max(100, 'Email không được quá 100 ký tự'),
-});
 
-const FormOTP = () => {
+const FormOTP = (props: { handleLoading: (value: boolean) => void }) => {
   const navigate = useNavigate();
+  const { handleLoading } = props;
   const inputRefs = useRef<HTMLInputElement[]>([]);
   const [error, setError] = useState('');
   const { email, password, name } = useAppSelector((state) => state.register);
+  const [timer, setTimer] = useState(60);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimer((timer) => {
+        if (timer > 0) return timer - 1;
+        else return 0;
+      });
+    }, 10);
+
+    return () => clearInterval(interval);
+  }, []);
 
   const handleInputChange = (
     event: ChangeEvent<HTMLInputElement>,
@@ -49,7 +54,9 @@ const FormOTP = () => {
                   .then((response) => {
                     console.log(response);
                   })
-                  .catch((error) => {});
+                  .catch((error) => {
+                    console.log(error);
+                  });
               };
               register();
               toast.success('Đăng ký thành công');
@@ -86,6 +93,27 @@ const FormOTP = () => {
     }
   };
 
+  const handleResendOTP = () => {
+    handleLoading(true);
+    if (timer > 0 || !email) return;
+    const resendOTP = async () => {
+      await AuthenticationApi.sendOTP({ gmail: email, status: 'Register' })
+        .then((response) => {
+          if (!response.data.success) {
+            return;
+          }
+          handleLoading(false);
+          toast.success('Gửi mã xác nhận thành công');
+          setTimer(60);
+        })
+        .catch((error) => {
+          handleLoading(false);
+          console.log(error);
+        });
+    };
+    resendOTP();
+  };
+
   return (
     <div>
       <section className="bg-white dark:bg-gray-900">
@@ -107,7 +135,7 @@ const FormOTP = () => {
                   Mã xác nhận
                 </label>
                 <div className="flex space-x-3">
-                  {Array.from(Array(6).keys()).map((item, index) => (
+                  {Array.from(Array(6).keys()).map((_item, index) => (
                     <input
                       ref={(ref) =>
                         (inputRefs.current[index] = ref as HTMLInputElement)
@@ -127,7 +155,13 @@ const FormOTP = () => {
                 )}
                 <p className="text-end text-sm">
                   Bạn chưa nhận được mã.{' '}
-                  <span className="underline cursor-pointer">Gửi lại</span>
+                  <span className="cursor-pointer">
+                    {timer === 0 ? (
+                      <button onClick={handleResendOTP}>Gửi lại</button>
+                    ) : (
+                      `00:${timer}`
+                    )}
+                  </span>
                 </p>
 
                 <button

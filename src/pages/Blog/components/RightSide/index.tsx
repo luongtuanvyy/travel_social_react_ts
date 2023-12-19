@@ -17,11 +17,10 @@ const RightSide = () => {
       const fetchDataFollower = async () => {
         try {
           const response = await FollowerApi.getTopFollowers({
-            email: user.email,
             page: 0,
             pageSize: 3,
           });
-          // console.log(response.data.data.datas);
+          console.log(response.data.data.datas);
           setUserFollower(response.data.data.datas);
         } catch (error) {
           console.log(error);

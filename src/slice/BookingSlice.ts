@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { number } from 'yup';
 import { RootState } from '~/app/store';
 import { Booking } from '~/types/entity';
 

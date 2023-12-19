@@ -1,4 +1,4 @@
-import { Tour, User } from './entity';
+import { User } from './entity';
 
 export type ApiRespone<T> = {
   success: boolean;

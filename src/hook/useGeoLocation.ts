@@ -19,8 +19,9 @@ const useGeoLocation = () => {
   const onError = (error: any) => {
     setLocation({
       loaded: true,
-      error,
+      coordinates: { lat: '', lng: '' },
     });
+    console.log(error);
   };
 
   useEffect(() => {

@@ -34,9 +34,9 @@ const BlogFeature = () => {
       <div
         className={` ${
           newPost ? 'fixed' : 'hidden'
-        } top-0 left-0 w-full h-full bg-gray-500 bg-opacity-50 flex items-center justify-center z-50`}
+        } top-0 left-0 w-full h-full bg-gray-500 bg-opacity-75 flex items-center justify-center z-50`}
       >
-        <ModalNewPost handleNewPost={handleNewPost} />
+        {/* <ModalNewPost handleNewPost={handleNewPost} /> */}
       </div>
     </div>
   );

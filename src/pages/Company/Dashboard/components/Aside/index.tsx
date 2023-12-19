@@ -1,14 +1,11 @@
-import React from 'react';
-import { Dashboard, UserIcon, } from '~/assets/svg';
-import Tour from '~/assets/svg/Tour';
 
 
 
-const DATA_FEATURES_ASIDE_COMPANY = [
-  { feature: 'Thống kê', icon: <Dashboard /> },
-  { feature: 'Quản lý tour', icon: <Tour /> },
-  { feature: 'Quản lý khách hàng', icon: <UserIcon /> },
-]
+// const DATA_FEATURES_ASIDE_COMPANY = [
+//   { feature: 'Thống kê', icon: <Dashboard /> },
+//   { feature: 'Quản lý tour', icon: <Tour /> },
+//   { feature: 'Quản lý khách hàng', icon: <UserIcon /> },
+// ]
 
 
 const AsideAdmin = () => {

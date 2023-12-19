@@ -7,13 +7,11 @@ import './index.css';
 import { InitFlowbiteProvider } from './utils/FlowbiteInitAction.tsx';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  // <React.StrictMode>
-    <BrowserRouter>
-      <InitFlowbiteProvider>
-        <Provider store={store}>
-          <App />
-        </Provider>
-      </InitFlowbiteProvider>
-    </BrowserRouter>
-  // </React.StrictMode>, 
+  <BrowserRouter>
+    <InitFlowbiteProvider>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </InitFlowbiteProvider>
+  </BrowserRouter>,
 );

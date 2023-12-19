@@ -1,9 +1,5 @@
-import { Datepicker } from 'flowbite-react';
-import React from 'react';
-import Range from '~/components/Range';
-import SelectLocation from '~/components/SelectLocation';
-import './index.css';
 import FilterActions from './FilterActions';
+import './index.css';
 
 const Filter = () => {
 

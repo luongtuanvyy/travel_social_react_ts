@@ -45,7 +45,6 @@ const SlideImage = () => {
       <motion.div
         ref={slider}
         className="overflow-hidden"
-        // whileTap={{ cursor: 'grabbing' }}
       >
         <motion.div
           drag={'x'}

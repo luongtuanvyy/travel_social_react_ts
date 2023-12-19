@@ -41,8 +41,8 @@ const DATA_RATE: Rate[] = [
 const TourDetail = () => {
   const { id } = useParams();
   const [tour, setTour] = useState<Tour>();
-  const [rating, setRating] = useState(0);
-  const [hoverRating, setHoverRating] = useState(0);
+  const [, setRating] = useState(0);
+  const [hoverRating,] = useState(0);
   const [comment, setComment] = useState<Comment[]>([]);
 
   useEffect(() => {

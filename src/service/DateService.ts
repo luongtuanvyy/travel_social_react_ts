@@ -30,7 +30,7 @@ export const convertDate = (dated: number) => {
   }
 };
 
-export const calculateDaysAndNights = (date1: string, date2: string) => {
+export const calculateDaysAndNights = (date1: number, date2: number) => {
   const stamp1 = new Date(date1);
   const stamp2 = new Date(date2);
   const oneDay = 1000 * 60 * 60 * 24;
@@ -43,7 +43,7 @@ export const calculateDaysAndNights = (date1: string, date2: string) => {
   return nights > 0 ? `${days} ngày ${nights} đêm` : `${days} ngày`;
 };
 
-export const convertDateToString = (dated: Date | string): string => {
+export const convertDateToString = (dated: Date | number): string => {
   const newDate = new Date(dated);
   return `${newDate.getDate()} Tháng ${
     newDate.getMonth() + 1

@@ -1,4 +1,3 @@
-import React from 'react';
 
 const Plane = (props: { size?: number }) => {
   return (
