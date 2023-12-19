@@ -1,17 +1,21 @@
 import React from 'react';
-import { Edit } from '~/assets/svg';
+import { Crash, Edit } from '~/assets/svg';
 import { BookingPerson } from '~/types/form';
 
 type MemberProps = {
   member: BookingPerson[];
   onModalMember: (value: boolean) => void;
+  deleteMember: (value: number) => void;
 };
 
 const Member = (props: MemberProps) => {
-  const { member, onModalMember } = props;
+  const { member, onModalMember, deleteMember } = props;
 
   const hanleModalMember = () => {
     onModalMember(true);
+  };
+  const deleteMemberId = (index: number) => {
+    deleteMember(index);
   };
 
   return (
@@ -72,13 +76,20 @@ const Member = (props: MemberProps) => {
                       : 'Người lớn'}
                   </div>
                 </td>
-                <td className="px-6 py-4">
+                <td className="px-6 py-4 space-x-2">
                   <button
                     type="button"
                     onClick={hanleModalMember}
                     className="font-medium hover:underline"
                   >
                     <Edit size={20} />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => deleteMemberId(index)}
+                    className="font-medium hover:underline"
+                  >
+                    <Crash />
                   </button>
                 </td>
               </tr>

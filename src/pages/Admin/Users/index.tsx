@@ -36,7 +36,7 @@ const UserAdmin = () => {
     if (pageURL < 1 || !pageURL) {
       pageURL = 1;
       console.log(pageURL);
-      navigate(`/admin/users?page=${pageURL}`);
+      // navigate(`/admin/users?page=${pageURL}`);
     }
     return pageURL;
   });

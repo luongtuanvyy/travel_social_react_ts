@@ -1,6 +1,5 @@
-import { initTabs } from 'flowbite';
-import React, { useEffect, useLayoutEffect, useState } from 'react';
-import { useLocation, useParams, useSearchParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import { TourApi } from '~/api/TourApi';
 import { StarNoneFill, Tick } from '~/assets/svg';
 import Star from '~/assets/svg/Star';
@@ -8,8 +7,8 @@ import MapLeaflet from '~/components/Map';
 import Navbar from '~/components/Navbar';
 import SlideImage from '~/components/SlideImage';
 import SlideReview from '~/components/SlideReview';
+import { Comment } from '~/types/api';
 import { Tour } from '~/types/entity';
-import { Link } from 'react-router-dom';
 
 type Rate = {
   star: number;
@@ -44,6 +43,7 @@ const TourDetail = () => {
   const [tour, setTour] = useState<Tour>();
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
+  const [comment, setComment] = useState<Comment[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -51,7 +51,19 @@ const TourDetail = () => {
         await TourApi.getTourById(parseInt(id) ?? 8)
           .then((response) => {
             setTour(response.data.data.datas[0]);
-            console.log(response.data.data.datas[0]);
+          })
+          .catch((err) => console.log(err));
+      }
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (id) {
+        await TourApi.getComment(parseInt(id))
+          .then((response) => {
+            setComment(response.data.data.datas);
           })
           .catch((err) => console.log(err));
       }
@@ -82,9 +94,7 @@ const TourDetail = () => {
               <div className=" p-2">
                 <div className="grid grid-cols-3">
                   <div className="col-span-2">
-                    <p className="font-medium text-xl mb-4">
-                      {tour.name}
-                    </p>
+                    <p className="font-medium text-xl mb-4">{tour.name}</p>
                     <p className="text-gray-500 text-sm mb-4">
                       <span className="font-medium">Nơi khởi hành:</span>{' '}
                       {tour.departure}
@@ -124,7 +134,9 @@ const TourDetail = () => {
                     </div>
                     <div>
                       <button className="px-5 py-2 border border-gray-700 rounded-lg">
-                        <Link to={`/booking/information/${tour.id}`}>Đặt ngay</Link>
+                        <Link to={`/booking/information/${tour.id}`}>
+                          Đặt ngay
+                        </Link>
                       </button>
                     </div>
                   </div>
@@ -132,9 +144,7 @@ const TourDetail = () => {
 
                 <div className="mt-4">
                   <p className="text-lg font-medium mb-2">Mô tả</p>
-                  <p className="text-sm text-gray-600">
-                    {tour.description}
-                  </p>
+                  <p className="text-sm text-gray-600">{tour.description}</p>
                 </div>
               </div>
 
@@ -155,10 +165,6 @@ const TourDetail = () => {
                     <p className="text-xs text-gray-500">
                       12/34, Phường Đa Kao, Quận 1, TP HCM
                     </p>
-                  </div>
-                  <div>
-                    {/* <button>Theo dõi</button>
-                  <button></button> */}
                   </div>
                 </div>
               </div>
@@ -224,7 +230,7 @@ const TourDetail = () => {
 
               <div>
                 <p className="text-lg font-medium">Nội dung đánh giá</p>
-                <SlideReview />
+                <SlideReview comment={comment} />
               </div>
 
               <div className="my-4 b">

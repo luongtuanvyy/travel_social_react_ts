@@ -12,14 +12,13 @@ const DATE_PAYMENT = [
   },
   {
     step: 'Hoàn tất',
-    link: '/booking/complete',
+    link: '/booking/successful',
   },
 ];
 
 const Indicator = () => {
   const location = useLocation();
   const { pathname } = location;
-
 
   return (
     <div className="w-[800px] min-w-[800px]">

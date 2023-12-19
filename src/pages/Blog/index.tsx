@@ -6,15 +6,15 @@ import ListBlog from './components/ListBlog';
 import ModalNewPost from './components/ModalNewPost';
 import NewPost from './components/NewPost';
 import RightSide from './components/RightSide';
+import { TabTitle } from '~/utils/TabTilte';
 
 const BlogFeature = () => {
+  TabTitle('Bảng tin');
   const [newPost, setNewPost] = useState(false);
   const user = useAppSelector((state) => state.auth.user);
 
   useEffect(() => {
-    // Tắt cuộn trang khi mở modal
-    if (newPost) document.body.style.overflow = 'scrollY';
-    else document.body.style.overflow = 'auto';
+    document.body.style.overflow = newPost ? 'scrollY' : 'auto';
   }, [newPost]);
 
   const handleNewPost = (value: boolean) => {

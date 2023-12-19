@@ -1,13 +1,15 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { FollowerApi } from '~/api/FollowerApi';
 import { useAppSelector } from '~/app/hook';
 import { member } from '~/assets/images';
-import { Action, Feed, History, Tick, UserIcon } from '~/assets/svg';
+import { Feed, History, Tick, UserIcon } from '~/assets/svg';
+import { Follower } from '~/types/api';
 
 const Aside = () => {
   const user = useAppSelector((state) => state.auth.user);
   const location = useLocation();
+  const [userFollower, setUserFollower]: any = useState<Follower[]>([]);
   const pathname = location.pathname;
   const feature = [
     { svg: <Feed />, path: '/newfeed' },
@@ -18,11 +20,16 @@ const Aside = () => {
   useEffect(() => {
     if (user) {
       const fetchData = async () => {
-        await FollowerApi.getFollowersById({ id: user.id })
-          .then((res) => {
-            console.log(res);
-          })
-          .catch((err) => {});
+        try {
+          const response = await FollowerApi.getFollowersById({
+            id: user.id.toString(),
+            page: 0,
+            pageSize: 5,
+          });
+          setUserFollower(response.data.data.datas);
+        } catch (error) {
+          console.log(error);
+        }
       };
       fetchData();
     }
@@ -63,27 +70,26 @@ const Aside = () => {
             pathname === '/newfeed' ? 'flex flex-col' : 'hidden'
           } h-full  bg-white w-full p-5`}
         >
-          <div className="">
+          <div className="min-h-[350px]">
             <p className="font-medium mb-5">Người bạn theo dõi</p>
-            {Array.from(Array(5).keys()).map((item, index) => (
+            {userFollower.map((item: Follower, index: number) => (
               <div key={index} className="flex space-x-2 items-center mb-5">
                 <div className="w-12 h-12 relative border-2 rounded-full">
                   <img
                     className="object-cover w-full h-full rounded-full"
-                    src="https://i.pinimg.com/736x/b5/b4/5c/b5b45c8508f815c26a3851237b0f6e7d.jpg"
+                    src={item.avatar}
                     alt=""
                   />
-                  <div className="absolute -bottom-1 right-0">
-                    <Tick size={18} />
-                  </div>
+                  {item.isVerify && (
+                    <div className="absolute -bottom-1 right-0">
+                      <Tick size={18} />
+                    </div>
+                  )}
                 </div>
                 <div className="grow">
-                  <p className="text-sm font-medium">Lương Tuấn Vỹ</p>
+                  <p className="text-sm font-medium">{item.name}</p>
                   <p className="text-gray-500 text-xs">Bạn bè</p>
                 </div>
-                {/* <button className="text-sm text-secondary font-medium">
-                  Theo dõi
-                </button> */}
               </div>
             ))}
           </div>

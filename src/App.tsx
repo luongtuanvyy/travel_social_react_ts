@@ -1,7 +1,7 @@
 import { initFlowbite } from 'flowbite';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import About from './pages/About';
 import DashboardAdmin from './pages/Admin/Dashboard';
 import TourAdmin from './pages/Admin/Tour';
@@ -29,28 +29,57 @@ import Payment from './pages/User/Payment';
 import TourDetail from './pages/User/TourDetail';
 import Tours from './pages/User/Tours';
 import { authAction } from './slice/AuthSlice';
+import Photo from './pages/Photo';
+import { Toaster } from 'react-hot-toast';
+import { RememberFeature } from './pages/Remember';
+import OTPFeature from './pages/OTP';
+
+const DATA_PATHNAME = [
+  '/login',
+  '/registers',
+  '/home',
+  '/tours',
+  '/photo',
+  '/places',
+  '/newfeed',
+  '/about',
+];
 
 const App = () => {
-  initFlowbite();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
-    const token = localStorage.getItem('token') || '';
-    dispatch(authAction.login({ token, user, with: 'gmail' }));
-  }, []);
+  const IntercepterPathname = (pathname: string) => {
+    DATA_PATHNAME.forEach((item) => {
+      if (pathname === item) {
+        return false;
+      }
+    });
+    return true;
+  };
 
-  //Enum
+  function usePageViews() {
+    let location = useLocation();
+    useEffect(() => {
+      initFlowbite();
+    }, [location]);
+  }
+
+  usePageViews();
 
   return (
     <>
+      <div>
+        <Toaster />
+      </div>
       <Routes>
         <Route path="" element={<Home />}></Route>
         <Route path="login" element={<Login />}></Route>
+        <Route path="newpassword" element={<Login />}></Route>
         <Route path="home" element={<Home />}></Route>
         <Route path="places" element={<PlacePage />}></Route>
-        <Route path="newfeed" element={<BlogFeature />}></Route>
         <Route path="tours" element={<Tours />}></Route>
+        <Route path="photo" element={<Photo />}></Route>
         <Route path="/tours/:id" element={<TourDetail />} />
         <Route path=":id" element={<ProfileFeature />}>
           <Route path="" element={<Profile />}>
@@ -65,11 +94,13 @@ const App = () => {
           <Route path="history" element={<History />} />
         </Route>
         <Route path="register" element={<RegisterFeature />} />
+        <Route path="forgotten" element={<RememberFeature />} />
         <Route path="newfeed" element={<BlogFeature />} />
+        <Route path="otp" element={<OTPFeature />} />
         <Route path="booking" element={<LayoutBooking />}>
           <Route path="information/:id" element={<Information />} />
-          <Route path="payment/:id" element={<Payment />} />
-          <Route path="successful/:id" element={<Successful />} />
+          <Route path="payment" element={<Payment />} />
+          <Route path="successful" element={<Successful />} />
         </Route>
         <Route path="/about" element={<About />} />
         <Route path="/company" element={<LayoutCompany />}>

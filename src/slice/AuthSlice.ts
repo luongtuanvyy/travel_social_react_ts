@@ -8,6 +8,7 @@ interface authState {
   token: string;
   user: User | null;
   with: string;
+  remember: boolean;
 }
 
 // Define the initial state using that type
@@ -15,6 +16,7 @@ const initialState: authState = {
   token: '',
   user: null,
   with: '',
+  remember: false,
 };
 
 export const authSlice = createSlice({
@@ -26,11 +28,13 @@ export const authSlice = createSlice({
       state.token = action.payload.token;
       state.user = action.payload.user;
       state.with = action.payload.with;
+      state.remember = action.payload.remember;
     },
     logout: (state) => {
       state.token = '';
       state.user = null;
       state.with = '';
+      state.remember = false;
     },
   },
 });

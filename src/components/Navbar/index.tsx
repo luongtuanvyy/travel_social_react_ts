@@ -1,6 +1,7 @@
 import { signOut } from 'firebase/auth';
 import { initFlowbite } from 'flowbite';
 import { useEffect, useLayoutEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '~/app/hook';
 import { RootState } from '~/app/store';
@@ -10,7 +11,7 @@ import { authAction, selectLoginWith, selectUser } from '~/slice/AuthSlice';
 
 const DATA_FEATURE_NAVBAR = [
   { id: 1, name: 'Trang chủ', path: '/home' },
-  { id: 2, name: 'Địa điểm', path: '/places' },
+  { id: 2, name: 'Địa điểm', path: '/places?page=1' },
   { id: 3, name: 'Tour', path: '/tours' },
   { id: 4, name: 'Công ty', path: '/company' },
   { id: 5, name: 'Bảng tin', path: '/newfeed' },
@@ -30,17 +31,20 @@ const Navbar = () => {
   );
   const handleLogOut = () => {
     if (loginWith === 'google' || loginWith === 'facebook') {
-      signOut(auth).then(() => {
-        // console.log('Đăng xuất thành công');
-      });
+      signOut(auth).then(() => {});
     }
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
     dispatch(authAction.logout());
+    toast.success('Đăng xuất thành công');
     navigate('/login');
   };
+
   const handleScrollY = () => {
     const scrollYWindow = window.scrollY;
     setScrollY(scrollYWindow);
   };
+
   const bgTransparent = () => {
     if (
       (location.pathname === '/home' || location.pathname === '/') &&
@@ -50,7 +54,7 @@ const Navbar = () => {
     }
     return true;
   };
-  // useEffect(() => {},)
+
   useEffect(() => {
     window.addEventListener('scroll', handleScrollY);
     return () => {
@@ -146,7 +150,7 @@ const Navbar = () => {
         <div
           className={`${
             showNavbar ? 'block ' : 'hidden'
-          } xl:flex xl:justify-center col-span-2 pb-4 xl:pb-0 order-3 xl:order-2 bg-gray-500 xl:bg-transparent`}
+          } relative xl:flex xl:justify-center col-span-2 pb-4 xl:pb-0 order-3 xl:order-2 bg-gray-500 xl:bg-transparent`}
         >
           <ul className="flex flex-col xl:flex-row text-sm font-medium xl:text-center pl-11 text-gray-500 dark:border-gray-700 dark:text-gray-400">
             {DATA_FEATURE_NAVBAR.map((item, index) => (
@@ -155,7 +159,11 @@ const Navbar = () => {
                   to={item.path}
                   className={`inline-block p-4 ${
                     bgTransparent() ? 'text-black' : 'text-white'
-                  } rounded-t-lg active dark:bg-gray-800 dark:text-blue-500`}
+                  } ${
+                    item.path.startsWith(location.pathname)
+                      ? 'border-gray-500'
+                      : 'border-transparent'
+                  } active dark:bg-gray-800 dark:text-blue-500 border-t-2  hover:border-secondary`}
                 >
                   <p>{item.name}</p>
                 </Link>
@@ -220,7 +228,7 @@ const Navbar = () => {
                       bgTransparent() ? 'text-black' : 'text-white'
                     } font-medium`}
                   >
-                    {user.accountName}
+                    {user.name}
                   </span>
                   <span
                     className={`${

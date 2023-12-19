@@ -1,6 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { number } from 'yup';
 import { RootState } from '~/app/store';
 import { Booking } from '~/types/entity';
+
 export interface BookingState {
   value: Booking;
 }
@@ -10,10 +12,10 @@ const initialState: BookingState = {
     id: 0,
     accountId: '',
     desciption: '',
+    createdAt: 0,
+    modifiedAt: 0,
     member: [],
-    createdAt: '',
     createdBy: '',
-    modifiedAt: '',
     modifiedBy: '',
     isActivated: false,
   },
@@ -24,16 +26,16 @@ export const BookingSlice = createSlice({
   initialState,
   reducers: {
     modifyBooking: (state: BookingState, action) => {
-      return { ...state, value: action.payload };
+      state.value = action.payload;
     },
     addMember: (state: BookingState, action) => {
-      return {
-        ...state,
-        value: {
-          ...state.value,
-          member: [...state.value.member, action.payload],
-        },
-      };
+      state.value.member = action.payload;
+    },
+    addDescription: (state: BookingState, action) => {
+      state.value.desciption = action.payload;
+    },
+    removeBooking: (state: BookingState) => {
+      state.value = initialState.value;
     },
   },
 });

@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom';
 import { Clock, HeartBorder } from '~/assets/svg';
 import Star from '~/assets/svg/Star';
 import User from '~/assets/svg/User';
+import { CurrencyVND } from '~/service/CurrentService';
+import { calculateDaysAndNights } from '~/service/DateService';
 import { Tour as TourInterface } from '~/types/entity';
 
 type TourProps = {
@@ -35,7 +37,7 @@ const Tour = (props: TourProps) => {
             </Link>
 
             <span className="text-xs font-medium text-gray-500">
-              4 ngày 3 đêm
+              {calculateDaysAndNights(tour.startDate, tour.endDate)}
             </span>
           </p>
           <div className="grow flex justify-end text-gray-400">
@@ -48,7 +50,7 @@ const Tour = (props: TourProps) => {
           <p className="flex flex-col">
             <span className="text-xs font-normal text-gray-400">Giá</span>
             <span className="text-lg font-medium mb-0">
-              2.000.000 <span>VNĐ</span>
+              {CurrencyVND(tour.adult)} <span>VNĐ</span>
             </span>
           </p>
           <div className="grow flex flex-col items-end">

@@ -17,7 +17,7 @@ const axiosClientProvince = axios.create({
 // Add a request interceptor
 axiosClientTravel.interceptors.request.use(
   function (config) {
-    config.headers.Authorization = `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyMCIsImlhdCI6MTcwMjEyODYwMCwiZXhwIjoxNzAyMTMyMjAwfQ.3C3k3S_tdSbb59ZzFjIjjypuHNWQ0a5HTPtVJdVTp84`;
+    config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
     return config;
   },
   function (error) {

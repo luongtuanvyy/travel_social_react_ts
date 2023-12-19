@@ -1,34 +1,43 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { useAppSelector } from '~/app/hook';
 import Navbar from '~/components/Navbar';
 
 import { PlaceApi } from '~/api/PlaceApi';
 import Pagination from '~/components/Pagination';
+import { PlaceAction } from '~/slice/PlaceSlide';
+import { TabTitle } from '~/utils/TabTilte';
 import FilterPlace from './components/Filter';
 import Places from './components/Places';
-import { PlaceAction } from '~/slice/PlaceSlide';
-import { set } from 'firebase/database';
 
 const PlacePage = () => {
+  TabTitle('Địa điểm');
+
   const dispatch = useDispatch();
+  const place = useAppSelector((state) => state.places);
+
   const [pageCurrent, setPageCurrent] = useState<number>(1);
+  const [address, setAddress] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [pageParam, setPageParam] = useSearchParams();
   const page = pageParam.get('page');
-  const place = useAppSelector((state) => state.places);
 
   useEffect(() => {
-    if (Number(page) < 1 || isNaN(Number(page))) {
+    if (Number(page) < 1 && page != null) {
       setPageParam({ page: '1' });
     }
+
     setPageCurrent(Number(page));
   }, [page]);
 
   useEffect(() => {
     const fetchData = async () => {
-      await PlaceApi.getPlaces({ pageSize: 9, page: Number(page) - 1 })
+      await PlaceApi.getPlaces({
+        pageSize: 9,
+        page: Number(page) - 1 < 0 ? 0 : Number(page) - 1,
+        address,
+      })
         .then((response) => {
           try {
             dispatch(
@@ -50,10 +59,15 @@ const PlacePage = () => {
         });
     };
     fetchData();
-  }, [pageCurrent]);
+  }, [pageCurrent, address]);
 
-  const handlePage = (currentPage: string) => {
-    setPageParam({ page: currentPage });
+  const handleAddress = (address: string) => {
+    setAddress(address);
+  };
+
+  const handlePage = (currentPage: number) => {
+    setPageParam({ page: currentPage.toString() });
+    setPageCurrent(currentPage);
     setLoading(true);
   };
 
@@ -61,7 +75,7 @@ const PlacePage = () => {
     <>
       <Navbar />
       <div className="mt-24">
-        <FilterPlace />
+        <FilterPlace handleAddress={handleAddress} />
         <Places loading={loading} />
       </div>
       <Pagination
